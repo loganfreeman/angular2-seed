@@ -1,1 +1,1 @@
-export * from './components/lightout.component';
+export * from './components/app.component';

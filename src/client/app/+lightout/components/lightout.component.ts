@@ -1,8 +1,15 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
-  selector: 'sd-lightout',
-  templateUrl: 'app/+lightout/components/lightout.component.html',
-  styleUrls: ['app/+lightout/components/lightout.component.css']
+  selector: 'lightout',
+  template: `
+  <div class="board">
+  </div>
+  `,
 })
-export class LightOutComponent {}
+export class LightOutComponent {
+  @Input() game: any;
+  constructor() {
+
+  }
+}
