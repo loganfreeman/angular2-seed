@@ -1,7 +1,7 @@
 // Credits to Christian Johansen for util logic:
 // https://github.com/cjohansen/react-sweeper
 
-let {fromJS, List, Map} = Immutable;
+import {fromJS, List, Map} from 'immutable';
 
 function partition(size, coll) {
   var res = [];
