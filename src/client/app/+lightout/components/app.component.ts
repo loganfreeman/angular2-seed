@@ -19,6 +19,7 @@ export class LightOutAppComponent {
   }
 
   startNewGame(){
-    this.game = createGame({cols: 16, rows: 16});
+    this.game = createGame({cols: 16, rows: 16, mines: 48});
+    console.log(this.game.toJSON());
   }
 }
