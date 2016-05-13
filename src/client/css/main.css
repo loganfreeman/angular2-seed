@@ -109,3 +109,12 @@ button:hover {
         #605d59
     );
 }
+
+.mine .lid {
+  background-image:
+  radial-gradient(
+      circle at bottom right,
+      #F1096D,
+      #EC8B08
+  );
+}
