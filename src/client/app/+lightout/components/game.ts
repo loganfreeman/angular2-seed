@@ -9,11 +9,19 @@ function initTiles(rows, cols, mines) {
     });
 }
 
-export function createGame(options){
+export function createGame(options:any){
   return fromJS({
     cols: options.cols,
     rows: options.rows,
     playingTime: 0,
     tiles: initTiles(options.rows, options.cols, options.mines)
   });
+}
+
+export function isGameOver(game:any){
+  return false;
+}
+
+export function revealTile(game:any, tile:any){
+  return game;
 }

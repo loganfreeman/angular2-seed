@@ -12,7 +12,6 @@ export class RowComponent {
   @Output() tileClick: EventEmitter = new EventEmitter();
 
   handleTileClick(tile){
-    console.log(tile.toJSON());
-    this.tileClick.next(tile);
+    this.tileClick.emit(tile);
   }
 }

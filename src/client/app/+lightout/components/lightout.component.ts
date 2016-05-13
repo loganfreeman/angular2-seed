@@ -1,6 +1,10 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {partition} from './util';
 import {RowComponent} from './row.component';
+import  {List } from 'immutable';
+
+import {isGameOver, revealTile} from './game';
+
 
 @Component({
   selector: 'lightout',
@@ -9,6 +13,11 @@ import {RowComponent} from './row.component';
 })
 export class LightOutComponent {
   @Input() game: any;
+
+  @Output() tileClick: EventEmitter = new EventEmitter();
+
+  history = List();
+
   constructor() {
 
   }
@@ -23,11 +32,44 @@ export class LightOutComponent {
 
   updateGame(updateHistory = true){
     this.rows = partition(this.game.get('cols'), this.game.get('tiles'));
+
+    if(updateHistory){
+      this.history = this.history.push(this.game);
+    }
   }
 
-  handleTileClick(tile){
+  handleTileClick(tile:any){
+    this.tileClick.next(tile);
+    
     if(!tile){
       return;
     }
+
+    if (isGameOver(this.game)) {
+      return;
+    }
+    const newGame = revealTile(this.game, tile.get('id'));
+    if (newGame !== this.game) {
+      this.game = newGame;
+      this.updateGame();
+    }
+    if (isGameOver(this.game)) {
+      window.alert('GAME OVER!');
+    }
+  }
+
+  undo(){
+    if (this.canUndo()) {
+      this.history = this.history.pop();
+      this.game = this.history.last();
+
+      // Don't update the history so we don't end up with
+      // the same game twice in the end of the list
+      this.updateGame(false);
+    }
+  }
+
+  canUndo(){
+    return this.history.size > 1;
   }
 }

@@ -14,6 +14,7 @@ export class LightOutAppComponent {
   public game:any;
   public gameJson:any;
   public isShowJson:boolean;
+  public tile:any;
   constructor() {
 
   }
@@ -29,5 +30,9 @@ export class LightOutAppComponent {
 
   toggleShowJson(){
     this.isShowJson = !this.isShowJson;
+  }
+
+  handleTileClick(tile:any){
+    this.tile = JSON.stringify(tile.toJSON(), null, 2);
   }
 }

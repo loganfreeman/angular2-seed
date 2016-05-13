@@ -1,7 +1,20 @@
-<lightout [game]="game" #lightout></lightout>
+<div class="Grid Grid--gutters">
+  <div class="Grid-cell u-full">
+    <lightout [game]="game" #lightout (tileClick)="handleTileClick($event)"></lightout>
+
+  </div>
+</div>
+
+<div class="info">
+  {{tile}}
+</div>
+
+
+
 <ul class="actions">
   <li><button (click)="startNewGame()">New game</button></li>
-  <li><button (click)="toggleShowJson()">Show JSON</button></li>
+  <li><button (click)="toggleShowJson()">Toggle JSON</button></li>
+  <li><button (click)="lightout.undo()" [hidden]="!lightout.canUndo()">Undo</button></li>
 </ul>
 <br />
 
