@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { createGame } from './game';
 import {LightOutComponent} from './lightout.component';
 
+
+
 @Component({
   selector: 'sd-lightout',
   templateUrl: 'app/+lightout/components/app.component.html',
@@ -10,6 +12,7 @@ import {LightOutComponent} from './lightout.component';
 })
 export class LightOutAppComponent {
   public game;
+  public gameJson;
   constructor() {
 
   }
@@ -20,6 +23,6 @@ export class LightOutAppComponent {
 
   startNewGame(){
     this.game = createGame({cols: 16, rows: 16, mines: 48});
-    console.log(this.game.toJSON());
+    this.gameJson = JSON.stringify(this.game.toJSON(), null, 2);
   }
 }
