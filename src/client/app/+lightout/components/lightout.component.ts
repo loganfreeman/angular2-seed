@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {partition} from './util';
+import {partition} from '../../shared/util';
 import {RowComponent} from './row.component';
 import  {List } from 'immutable';
 
@@ -40,7 +40,7 @@ export class LightOutComponent {
 
   handleTileClick(tile:any){
     this.tileClick.next(tile);
-    
+
     if(!tile){
       return;
     }

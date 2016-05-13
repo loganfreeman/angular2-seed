@@ -1,5 +1,5 @@
 import {List,Map,fromJS} from 'immutable';
-import {partition, shuffle, repeat, keep, prop} from './util';
+import {partition, shuffle, repeat, keep, prop} from '../../shared/util';
 
 function initTiles(rows, cols, mines) {
   return shuffle(repeat(mines, Map({isMine: true, isRevealed: false})).
