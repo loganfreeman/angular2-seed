@@ -3,6 +3,7 @@ import { ROUTER_DIRECTIVES, Routes } from '@angular/router';
 
 import { AboutComponent } from '../+about/index';
 import { LightOutAppComponent } from '../+lightout/index';
+import { SudokuAppComponent } from '../+sudoku/index';
 import { HomeComponent } from '../+home/index';
 import { NameListService } from '../shared/index';
 import { NavbarComponent } from './navbar.component';
@@ -26,6 +27,10 @@ import { ToolbarComponent } from './toolbar.component';
   {
     path: '/lightout',
     component: LightOutAppComponent
+  },
+  {
+    path: '/sudoku',
+    component: SudokuAppComponent
   }
 ])
 export class AppComponent {}
