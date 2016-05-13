@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {TileComponent} from './tile.component';
 
 @Component({
@@ -8,4 +8,11 @@ import {TileComponent} from './tile.component';
 })
 export class RowComponent {
   @Input() row: any;
+
+  @Output() tileClick: EventEmitter = new EventEmitter();
+
+  handleTileClick(tile){
+    console.log(tile.toJSON());
+    this.tileClick.next(tile);
+  }
 }
