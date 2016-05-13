@@ -37,6 +37,7 @@ ul {
 li {
   font-weight: 400;
   margin-top: 4px;
+  display: inline;
 }
 
 input {

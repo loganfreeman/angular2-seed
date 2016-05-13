@@ -11,8 +11,9 @@ import {LightOutComponent} from './lightout.component';
   directives: [LightOutComponent]
 })
 export class LightOutAppComponent {
-  public game;
-  public gameJson;
+  public game:any;
+  public gameJson:any;
+  public isShowJson:boolean;
   constructor() {
 
   }
@@ -24,5 +25,9 @@ export class LightOutAppComponent {
   startNewGame(){
     this.game = createGame({cols: 16, rows: 16, mines: 48});
     this.gameJson = JSON.stringify(this.game.toJSON(), null, 2);
+  }
+
+  toggleShowJson(){
+    this.isShowJson = !this.isShowJson;
   }
 }

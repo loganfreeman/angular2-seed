@@ -1,10 +1,11 @@
 <lightout [game]="game" #lightout></lightout>
 <ul class="actions">
   <li><button (click)="startNewGame()">New game</button></li>
+  <li><button (click)="toggleShowJson()">Show JSON</button></li>
 </ul>
 <br />
 
 
-<pre>
+<pre *ngIf="isShowJson">
   {{gameJson}}
 </pre>
