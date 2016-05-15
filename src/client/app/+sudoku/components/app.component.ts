@@ -5,7 +5,7 @@ import {BoardComponent} from './board.component';
 
 
 @Component({
-  selector: 'sd-lightout',
+  selector: 'sd-sudoku',
   templateUrl: 'app/+sudoku/components/app.component.html',
   styleUrls: ['app/+sudoku/components/app.component.css'],
   directives: [BoardComponent]
