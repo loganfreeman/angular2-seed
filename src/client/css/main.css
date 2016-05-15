@@ -319,10 +319,7 @@ button:hover {
 /* game board */
 
 .board {
-    border: 10px solid #a49e96;
-    border-radius: 10px;
     margin: 20px;
-    background: #938d85;
     display: inline-block;
 }
 
@@ -392,4 +389,32 @@ button:hover {
 
 .thirdCol {
   border-right: 5px solid blue;
+}
+
+.modal-body .tile {
+  position: relative;
+  border-width: 0;
+  width: 100px;
+  height: 100px;
+  float: left;
+  color: #100d09;
+  font-weight: bold;
+  line-height: 30px;
+  font-size: 50px;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.modal-body .tile:hover {
+  background-color:#F9EDBE;
+}
+
+.center-item {
+  width: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 20px;
 }

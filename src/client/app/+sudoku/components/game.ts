@@ -37,3 +37,9 @@ export function revealTile(game:any, tile:any){
           game : game.setIn(['tiles', tile, 'isRevealed'], true);
   return updated;
 }
+
+export function setTile(game:any, tile:any, value:any){
+  const updated = !game.getIn(['tiles', tile]) ?
+          game : game.setIn(['tiles', tile, 'value'], value);
+  return updated;
+}

@@ -1,7 +1,7 @@
 <sudoku [game]="game" #sudoku (tileClick)="handleTileClick($event)"></sudoku>
 
 <div class="info">
-  {{tile}}
+  {{tileJson}}
 </div>
 
 <ul class="actions">
@@ -16,3 +16,22 @@
 <pre *ngIf="isShowJson">
   {{gameJson}}
 </pre>
+
+
+<modal [animation]="animationsEnabled" (onClose)="onClose($event)" #myModal>
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Choose a number</h4>
+    </modal-header>
+    <modal-body>
+        <div class="board">
+          <div class="row" *ngFor="let row of items">
+            <div class="tile" *ngFor="let tile of row" (click)="modalSelected = tile">
+                <span class="center-item">
+                  {{tile}}
+                </span>
+            </div>
+          </div>
+        </div>
+    </modal-body>
+    <modal-footer [show-default-buttons]="true"></modal-footer>
+</modal>

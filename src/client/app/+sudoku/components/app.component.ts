@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { createGame } from './game';
+import { Component, ViewChild } from '@angular/core';
+import { createGame, setTile, revealTile } from './game';
 import {BoardComponent} from './board.component';
 
-import { MODAL_DIRECTIVES } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { MODAL_DIRECTIVES, ModalResult, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 
 
@@ -16,7 +16,15 @@ export class SudokuAppComponent {
   public game:any;
   public gameJson:any;
   public isShowJson:boolean;
-  public tile:any;
+  public selectedTile:any;
+  tileJson: string;
+  modalSelected: number;
+  selected: number;
+  items: number[][] = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+  animationsEnabled: boolean = true;
+
+  @ViewChild('myModal')
+  modal: ModalComponent;
   constructor() {
 
   }
@@ -35,7 +43,14 @@ export class SudokuAppComponent {
   }
 
   handleTileClick(tile:any){
-    this.tile = JSON.stringify(tile.toJSON(), null, 2);
+    this.selectedTile = tile;
+    this.tileJson = JSON.stringify(tile.toJSON(), null, 2);
+    this.modal.open();
+  }
+
+  onClose() {
+    this.selected = this.modalSelected;
+    this.game = revealTile(setTile(this.game, this.selectedTile.get('id'), this.selected), this.selectedTile.get('id'));
   }
 
 }

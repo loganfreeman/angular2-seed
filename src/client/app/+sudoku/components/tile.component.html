@@ -1,6 +1,6 @@
 <div class="tile" [class.thirdRow]="isThirdRow()" [class.thirdCol]="isThirdCol()">
   <div class="lid" *ngIf="!tile.get('isRevealed')"></div>
   <div *ngIf="tile.get('isRevealed')">
-    {{ tile.get('id') }}
+    {{ tile.get('value') || tile.get('id') }}
   </div>
 </div>
