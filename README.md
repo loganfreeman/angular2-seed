@@ -1,3 +1,4 @@
 My Playground with angular2
 ---
-### Lightout game
+1. Light out
+2. Sudoku
