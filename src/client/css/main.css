@@ -384,3 +384,12 @@ button:hover {
 .actions {
   margin-top: 25px;
 }
+
+.thirdRow {
+  border-bottom: 5px solid blue;
+}
+
+
+.thirdCol {
+  border-right: 5px solid blue;
+}
