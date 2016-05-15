@@ -1,11 +1,17 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {TileComponent } from './tile.component';
 
 @Component({
   selector: 'row',
-  template: `
-  `,
-  directives: []
+  templateUrl: 'app/+sudoku/components/row.component.html',
+  directives: [TileComponent]
 })
 export class RowComponent {
   @Input() row: any;
+
+  @Output() tileClick: EventEmitter = new EventEmitter();
+
+  handleTileClick(tile:any){
+    this.tileClick.emit(tile);
+  }
 }

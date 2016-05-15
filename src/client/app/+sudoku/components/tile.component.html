@@ -1,0 +1,6 @@
+<div class="tile">
+  <div class="lid" *ngIf="!tile.get('isRevealed')"></div>
+  <div *ngIf="tile.get('isRevealed')">
+    {{ tile.get('id') }}
+  </div>
+</div>

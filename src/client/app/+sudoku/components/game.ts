@@ -33,5 +33,7 @@ export function isGameOver(game:any){
 }
 
 export function revealTile(game:any, tile:any){
-  return game;
+  const updated = !game.getIn(['tiles', tile]) ?
+          game : game.setIn(['tiles', tile, 'isRevealed'], true);
+  return updated;
 }
