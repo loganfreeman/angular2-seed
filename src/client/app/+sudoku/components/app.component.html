@@ -1,6 +1,18 @@
-<sudoku></sudoku>
+<sudoku [game]="game" #sudoku (tileClick)="handleTileClick($event)"></sudoku>
+
+<div class="info">
+  {{tile}}
+</div>
+
 <ul class="actions">
   <li>
     <button (click)="startNewGame()">New Game</button>
   </li>
+  <li><button (click)="toggleShowJson()">Toggle JSON</button></li>
+  <li><button (click)="sudoku.undo()" [hidden]="!sudoku.canUndo()">Undo</button></li>
 </ul>
+
+
+<pre *ngIf="isShowJson">
+  {{gameJson}}
+</pre>

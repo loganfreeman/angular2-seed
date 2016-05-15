@@ -1,4 +1,3 @@
-<div class="board">
-
-
+<div class="board" *ngIf="rows">
+  <row *ngFor="let row of rows" [row]="row" (tileClick)="handleTileClick($event)"></row>
 </div>

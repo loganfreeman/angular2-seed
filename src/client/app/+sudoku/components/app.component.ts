@@ -24,8 +24,16 @@ export class SudokuAppComponent {
   }
 
   startNewGame(){
-    this.game = createGame();
+    this.game = createGame(9, 9);
+    this.gameJson = JSON.stringify(this.game.toJSON(), null, 2);
   }
 
+  toggleShowJson(){
+    this.isShowJson = !this.isShowJson;
+  }
+
+  handleTileClick(tile:any){
+    this.tile = JSON.stringify(tile.toJSON(), null, 2);
+  }
 
 }
