@@ -37,4 +37,10 @@ function shuffle(list:any) {
   return list.sort(function () { return Math.random() - 0.5; });
 }
 
-export {partition, identity, prop, keep, repeat, shuffle};
+function zip(arrays:any[]) {
+    return arrays[0].map(function(_:any,i:number){
+        return arrays.map(function(array){return array[i]})
+    });
+}
+
+export {partition, identity, prop, keep, repeat, shuffle, zip};
