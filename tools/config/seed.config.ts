@@ -93,10 +93,6 @@ export class SeedConfig {
     },
     packages: {
       rxjs: { defaultExtension: false }
-    },
-    map: {
-      //'jquery': '//code.jquery.com/jquery-2.1.4.min.js',
-      'ng2-bs3-modal': 'node_modules/ng2-bs3-modal'
     }
   };
 
