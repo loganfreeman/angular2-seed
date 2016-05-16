@@ -9,9 +9,9 @@ import {TileComponent} from './tile.component';
 export class RowComponent {
   @Input() row: any;
 
-  @Output() tileClick: EventEmitter = new EventEmitter();
+  @Output() tileClick: EventEmitter<any> = new EventEmitter();
 
-  handleTileClick(tile){
+  handleTileClick(tile:any){
     this.tileClick.emit(tile);
   }
 }

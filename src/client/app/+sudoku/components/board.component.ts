@@ -16,11 +16,13 @@ import {isGameOver, revealTile} from './game';
 export class BoardComponent {
   history = List();
 
+  rows:any;
+
   @Input() game: any;
 
-  @Output() tileClick: EventEmitter = new EventEmitter();
+  @Output() tileClick: EventEmitter<any> = new EventEmitter();
 
-  ngOnChanges(changes){
+  ngOnChanges(changes:any){
     // Only update game when game has actually changed
     if(changes.hasOwnProperty('game') && this.game){
       this.updateGame()

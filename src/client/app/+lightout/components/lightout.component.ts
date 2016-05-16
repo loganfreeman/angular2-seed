@@ -14,15 +14,17 @@ import {isGameOver, revealTile} from './game';
 export class LightOutComponent {
   @Input() game: any;
 
-  @Output() tileClick: EventEmitter = new EventEmitter();
+  @Output() tileClick: EventEmitter<any> = new EventEmitter();
 
   history = List();
+
+  rows:any;
 
   constructor() {
 
   }
 
-  ngOnChanges(changes){
+  ngOnChanges(changes:any){
     // Only update game when game has actually changed
     if(changes.hasOwnProperty('game') && this.game){
       this.updateGame()

@@ -14,7 +14,7 @@ function getRandomInt(min: number, max : number) {
 
 function initTiles(rows: number = 9, cols: number = 9){
   return repeat(rows * cols , Map({isRevealed: false})).
-    map(function (tile, idx) {
+    map(function (tile:any, idx:any) {
       return tile.set('id', idx);
     });
 }
