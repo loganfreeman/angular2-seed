@@ -1,7 +1,7 @@
 import {List,Map,fromJS} from 'immutable';
 import {partition, shuffle, repeat, keep, prop} from '../../shared/util';
 import {zip} from 'underscore';
-import {makeSudoku, solveBoard} from './algo';
+import {makeSudoku, solveBoard, allowed} from './algo';
 
 /**
  * Get a random integer within a range
@@ -56,4 +56,12 @@ export function validateTile(tile:any){
 
 export function validateMatrix(game:any){
 
+}
+
+export function getAllowed(game:any, pos:number){
+  var board:number[] = game.get('tiles').toArray().map(function(tile:any,idx:number){
+    return tile.get('value');
+  })
+
+  return allowed(board, pos);
 }

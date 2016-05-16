@@ -310,9 +310,28 @@ function listbits(bits: number) {
   return list;
 }
 
-function allowed(board: number[], pos: number) {
+function axisfor(pos:number, axis:number) {
+	if (axis == 0) {
+		return Math.floor(pos / 9);
+	}
+	else if (axis == 1) {
+		return pos % 9;
+	}
 
+	return Math.floor(pos / 27) * 3 + Math.floor(pos / 3) % 3;
 }
+
+export function allowed(board:number[], pos:number):number[] {
+	var bits = 511;
+
+	for (var axis = 0; axis < 3; axis++) {
+		var x = axisfor(pos, axis);
+		bits = bits & axismissing(board, x, axis);
+	}
+
+	return listbits(bits);
+}
+
 
 function pickBetter(b: any[], c: number, t: any[]) {
   if (b == null || t.length < b.length) {

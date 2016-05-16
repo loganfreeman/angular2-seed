@@ -35,3 +35,14 @@
     </modal-body>
     <modal-footer [show-default-buttons]="true"></modal-footer>
 </modal>
+
+
+<modal [animation]="animationsEnabled" #alertModal>
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Alert!</h4>
+    </modal-header>
+    <modal-body>
+        Your value chosen {{modalSelected}} is not allowed!
+    </modal-body>
+    <modal-footer [show-default-buttons]="false"></modal-footer>
+</modal>

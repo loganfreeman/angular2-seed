@@ -1,8 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { createGame, setTile, revealTile } from './game';
+import { createGame, setTile, revealTile, getAllowed } from './game';
 import {BoardComponent} from './board.component';
 
 import { MODAL_DIRECTIVES, ModalResult, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
+
+import { contains } from 'underscore';
 
 
 
@@ -25,6 +27,11 @@ export class SudokuAppComponent {
 
   @ViewChild('myModal')
   modal: ModalComponent;
+
+
+  @ViewChild('alertModal')
+  alert: ModalComponent;
+
   constructor() {
 
   }
@@ -49,8 +56,13 @@ export class SudokuAppComponent {
   }
 
   onClose() {
-    this.selected = this.modalSelected;
-    this.game = revealTile(setTile(this.game, this.selectedTile.get('id'), this.selected), this.selectedTile.get('id'));
+    var allowed = getAllowed(this.game, this.selectedTile.get('id'));
+    if(!contains(allowed, this.modalSelected)){
+      this.alert.open();
+    }else{
+      this.selected = this.modalSelected;
+      this.game = revealTile(setTile(this.game, this.selectedTile.get('id'), this.selected), this.selectedTile.get('id'));
+    }
   }
 
 }
