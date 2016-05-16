@@ -1,5 +1,6 @@
 import {List,Map,fromJS} from 'immutable';
 import {partition, shuffle, repeat, keep, prop} from '../../shared/util';
+import {zip} from 'underscore';
 
 /**
  * Get a random integer within a range
@@ -49,5 +50,5 @@ export function validateTile(tile:any){
 }
 
 export function validateMatrix(game:any){
-  
+
 }
