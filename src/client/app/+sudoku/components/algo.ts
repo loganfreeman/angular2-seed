@@ -1,7 +1,11 @@
 import 'underscore';
 
+export function makeSudoku(){
+  return makePuzzle(solvePuzzle(makeArray(81, null)));
+}
+
 // board: array of numbers, size of array 81, contains solved sudoku puzzle
-export function makePuzzle(board: number[]) {
+function makePuzzle(board: number[]) {
   var puzzle: any[] = [];
   var deduced = makeArray(81, null);
   var order = _.range(81);
@@ -89,8 +93,8 @@ function checkPuzzle(puzzle: any[], board: number[]) {
 	return difficulty;
 }
 
-function solvePuzzle() {
-
+function solvePuzzle(board:number[]) {
+  return solveBoard(board).answer;
 }
 
 export function solveBoard(original:any[]) {

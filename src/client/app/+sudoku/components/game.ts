@@ -1,7 +1,7 @@
 import {List,Map,fromJS} from 'immutable';
 import {partition, shuffle, repeat, keep, prop} from '../../shared/util';
 import {zip} from 'underscore';
-import {makePuzzle, solveBoard} from './algo';
+import {makeSudoku, solveBoard} from './algo';
 
 /**
  * Get a random integer within a range
@@ -15,10 +15,14 @@ function getRandomInt(min: number, max : number) {
 }
 
 function initTiles(rows: number = 9, cols: number = 9){
-  return repeat(rows * cols , Map({isRevealed: false})).
-    map(function (tile:any, idx:any) {
-      return tile.set('id', idx);
+  var board = makeSudoku();
+  return board.map(function (value:number, idx:number) {
+      var tile:any = Map({isRevealed: value != null});
+      tile = tile.set('id', idx);
+      tile = tile.set('value', value);
+      return tile;
     });
+
 }
 
 export function createGame(rows: number = 9, cols: number = 9){
