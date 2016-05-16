@@ -43,3 +43,11 @@ export function setTile(game:any, tile:any, value:any){
           game : game.setIn(['tiles', tile, 'value'], value);
   return updated;
 }
+
+export function validateTile(tile:any){
+
+}
+
+export function validateMatrix(game:any){
+  
+}
