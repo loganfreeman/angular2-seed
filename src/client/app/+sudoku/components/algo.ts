@@ -1,37 +1,238 @@
 import 'underscore';
 
 // board: array of numbers, size of array 81, contains solved sudoku puzzle
-function makePuzzle(board: number[]) {
+export function makePuzzle(board: number[]) {
   var puzzle: any[] = [];
   var deduced = makeArray(81, null);
   var order = _.range(81);
 
   shuffleArray(order);
+
+  for (var i = 0; i < order.length; i++) {
+    var pos = order[i];
+
+    if (deduced[pos] == null) {
+      puzzle.push({ pos: pos, num: board[pos] });
+      deduced[pos] = board[pos];
+      deduce(deduced);
+    }
+  }
+
+  shuffleArray(puzzle);
+
+  for (var i = puzzle.length - 1; i >= 0; i--) {
+    var e = puzzle[i];
+    removeElement(puzzle, i, null);
+
+    var rating = checkPuzzle(boardforentries(puzzle), board);
+    if (rating == -1) {
+      puzzle.push(e);
+    }
+  }
+
+  return boardforentries(puzzle);
+
 }
 
 function ratePuzzle() {
 
 }
 
-function checkPuzzle(puzzle: any[], board: number[]) {
+function boardforentries(entries:any[]) {
+	var board = _.map(_.range(81), function(val, key) {
+		return null;
+	});
 
+	for (var i = 0; i < entries.length; i++) {
+		var item = entries[i];
+		var pos  = item.pos;
+		var num  = item.num;
+
+		board[pos] = num;
+	}
+
+	return board;
+}
+
+function boardMatches(b1:any[], b2:any[]) {
+	for (var i = 0; i < 81; i++) {
+		if (b1[i] != b2[i]) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+
+function checkPuzzle(puzzle: any[], board: number[]) {
+  if (board == undefined) {
+		board = null;
+	}
+
+	var tuple1 = solveBoard(puzzle);
+	if (tuple1.answer == null) {
+		return -1;
+	}
+
+	if (board != null && boardMatches(board, tuple1.answer) == false) {
+		return -1;
+	}
+
+	var difficulty = tuple1.state.length;
+	var tuple2     = solveNext(tuple1.state);
+
+	if (tuple2.answer != null) {
+		return -1;
+	}
+
+	return difficulty;
 }
 
 function solvePuzzle() {
 
 }
 
-function solveBoard() {
+export function solveBoard(original:any[]) {
+  var board   = [].concat(original);
+	var guesses = deduce(board);
 
+	if (guesses == null) {
+		return {state:[], answer:board};
+	}
+
+	var track = [{guesses:guesses, count:0, board:board}];
+	return solveNext(track);
 }
 
 function solveNext(remembered: any[]) {
+  while (remembered.length > 0) {
+    var tuple1 = remembered.pop();
 
+    if (tuple1.count >= tuple1.guesses.length) {
+      continue;
+    }
+
+    remembered.push({guesses:tuple1.guesses, count:tuple1.count+1, board:tuple1.board});
+    var workspace = [].concat(tuple1.board);
+    var tuple2    = tuple1.guesses[tuple1.count];
+
+    workspace[tuple2.pos] = tuple2.num;
+
+    var guesses = deduce(workspace);
+
+    if (guesses == null) {
+      return {state:remembered, answer:workspace};
+    }
+
+    remembered.push({guesses:guesses, count:0, board:workspace});
+}
+
+  return {state:[], answer:null};
 }
 
 function deduce(board: number[]) {
+  while (true) {
+    var stuck = true;
+    var guess: any[] = null;
+    var count = 0;
 
+    // fill in any spots determined by direct conflicts
+    var tuple1 = figurebits(board);
+    var allowed = tuple1.allowed;
+    var needed = tuple1.needed;
+
+    for (var pos = 0; pos < 81; pos++) {
+	    	if (board[pos] == null) {
+        var numbers = listbits(allowed[pos]);
+        if (numbers.length == 0) {
+          return [];
+        }
+        else if (numbers.length == 1) {
+          board[pos] = numbers[0];
+          stuck = false;
+        }
+        else if (stuck == true) {
+          var t = _.map(numbers, function(val, key) {
+            return { pos: pos, num: val };
+          });
+
+          var tuple2 = pickbetter(guess, count, t);
+          guess = tuple2.guess;
+          count = tuple2.count;
+        }
+	    	}
+    }
+
+    if (stuck == false) {
+		    var tuple3 = figurebits(board);
+		    allowed = tuple3.allowed;
+		    needed = tuple3.needed;
+    }
+
+    // fill in any spots determined by elimination of other locations
+    for (var axis = 0; axis < 3; axis++) {
+	    	for (var x = 0; x < 9; x++) {
+        var numbers = listbits(needed[axis * 9 + x]);
+
+        for (var i = 0; i < numbers.length; i++) {
+          var n = numbers[i];
+          var bit = 1 << n;
+          var spots: any[] = [];
+
+          for (var y = 0; y < 9; y++) {
+            var pos = posfor(x, y, axis);
+            if (allowed[pos] & bit) {
+              spots.push(pos);
+            }
+          }
+
+          if (spots.length == 0) {
+            return [];
+          }
+          else if (spots.length == 1) {
+            board[spots[0]] = n;
+            stuck = false;
+          }
+          else if (stuck) {
+            var t: { pos: number; num: number }[] = _.map(spots, function(val, key) {
+              return { pos: val, num: n };
+            });
+
+            var tuple4 = pickbetter(guess, count, t);
+            guess = tuple4.guess;
+            count = tuple4.count;
+          }
+        }
+	    	}
+    }
+
+    if (stuck == true) {
+    		if (guess != null) {
+        shuffleArray(guess);
+    		}
+
+    		return guess;
+    }
+  }
 }
+
+
+//
+function pickbetter(b: any[], c: number, t: any[]) {
+  if (b == null || t.length < b.length) {
+    return { guess: t, count: 1 };
+  }
+  else if (t.length > b.length) {
+    return { guess: b, count: c };
+  }
+  else if (randomInt(c) == 0) {
+    return { guess: t, count: c + 1 };
+  }
+
+  return { guess: b, count: c + 1 };
+}
+
 
 function figurebits(board: number[]) {
   var needed: number[] = [];
@@ -39,7 +240,7 @@ function figurebits(board: number[]) {
     return val == null ? 511 : 0;
   }, []);
 
-  // for three axis
+  // for three axis, a total of 27 axis to check
   // x has different meaning depending on the axis,
   // for example, when the axis is row, its means each row
   // when the axis is column, it means each column,
@@ -48,7 +249,7 @@ function figurebits(board: number[]) {
     for (var x = 0; x < 9; x++) {
       var bits = axismissing(board, x, axis);
       needed.push(bits);
-
+      // for all 9 places
       for (var y = 0; y < 9; y++) {
         var pos = posfor(x, y, axis);
         allowed[pos] = allowed[pos] & bits;
@@ -60,10 +261,11 @@ function figurebits(board: number[]) {
 }
 
 
-
+// x: a particular number in an axis
+// check if a particular axis is missing numbers
 function axismissing(board: number[], x: number, axis: number) {
   var bits = 0;
-
+  // for all 9 places
   for (var y = 0; y < 9; y++) {
     var e = board[posfor(x, y, axis)];
 

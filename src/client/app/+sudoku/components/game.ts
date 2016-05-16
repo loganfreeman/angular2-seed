@@ -1,6 +1,7 @@
 import {List,Map,fromJS} from 'immutable';
 import {partition, shuffle, repeat, keep, prop} from '../../shared/util';
 import {zip} from 'underscore';
+import {makePuzzle, solveBoard} from './algo';
 
 /**
  * Get a random integer within a range
