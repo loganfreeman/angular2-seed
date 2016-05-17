@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { createGame, setTile, revealTile, getAllowed } from './game';
+import { createGame, setTile, revealTile, getAllowed, solve } from './game';
 import {BoardComponent} from './board.component';
 
 import { MODAL_DIRECTIVES, ModalResult, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
@@ -43,6 +43,10 @@ export class SudokuAppComponent {
   startNewGame(){
     this.game = createGame(9, 9);
     this.gameJson = JSON.stringify(this.game.toJSON(), null, 2);
+  }
+
+  solvePuzzle(){
+    this.game = solve(this.game);
   }
 
   toggleShowJson(){

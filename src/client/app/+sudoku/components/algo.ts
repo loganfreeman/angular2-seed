@@ -93,11 +93,11 @@ function checkPuzzle(puzzle: any[], board: number[]) {
 	return difficulty;
 }
 
-function solvePuzzle(board:number[]) {
+export function solvePuzzle(board:number[]) {
   return solveBoard(board).answer;
 }
 
-export function solveBoard(original:any[]) {
+export function solveBoard(original:number[]) {
   var board   = [].concat(original);
 	var guesses = deduce(board);
 
