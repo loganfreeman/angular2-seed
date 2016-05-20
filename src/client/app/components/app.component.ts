@@ -8,6 +8,7 @@ import { HomeComponent } from '../+home/index';
 import { NameListService } from '../shared/index';
 import { NavbarComponent } from './navbar.component';
 import { ToolbarComponent } from './toolbar.component';
+import {TetrisComponent} from '../+tetris/index';
 
 @Component({
   selector: 'sd-app',
@@ -31,6 +32,10 @@ import { ToolbarComponent } from './toolbar.component';
   {
     path: '/sudoku',
     component: SudokuAppComponent
+  },
+  {
+    path: '/tetris',
+    component: TetrisComponent
   }
 ])
 export class AppComponent {}
