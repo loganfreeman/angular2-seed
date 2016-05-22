@@ -1,3 +1,4 @@
+import {GridService} from './grid';
 export const PATTERNS = [
     [[1, 5, 9, 10], [4, 5, 6, 8], [0, 1, 5, 9], [2, 4, 5, 6]], // L
     [[0, 1, 4, 5], [0, 1, 4, 5], [0, 1, 4, 5], [0, 1, 4, 5]], // O
@@ -74,6 +75,14 @@ export const GAMESPEED = {
   'SUPER': 150
 }
 
+export function getBoardWidth(){
+  return board.boardWidth;
+}
+
+export function getBoardHeight(){
+  return board.boardHeight;
+}
+
 export function generateUID(){
   var d = new Date().getTime();
   var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -82,4 +91,17 @@ export function generateUID(){
     return (c === 'x' ? r : (r&0x7|0x8)).toString(16);
   });
   return uuid;
+}
+
+var gridService:GridService = new GridService();
+
+export function buildEmptyGameBoard(){
+  var sizeOfBoard = getBoardWidth() * getBoardHeight();
+  for (var i = 0; i < sizeOfBoard; i++) {
+      gridService.grid[i] = {
+          filled: false,
+          shape: null,
+          ghost: false
+      };
+  }
 }
