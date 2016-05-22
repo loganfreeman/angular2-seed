@@ -13,7 +13,7 @@ export const ROTATION_MATRIX = [
         ],
         [ // rotate 180
             [3, 3], [3, 2], [3, 1], [3, 0],
-            [2, 3], [2, 2], [2, 1], [2, 0],  
+            [2, 3], [2, 2], [2, 1], [2, 0],
             [1, 3], [1, 2], [1, 1], [1, 0],
             [0, 3], [0, 2], [0, 1], [0, 0]
         ],
@@ -24,3 +24,18 @@ export const ROTATION_MATRIX = [
             [0, 0], [1, 0], [2, 0], [3, 0]
         ]
 ];
+
+export const board = {
+    borderWidth: 10,
+    pieceWidthInPixel: 25, // match the pixel of piece in grid
+    boardWidth: 10,
+    boardHeight: 20
+}
+
+export const GAMESPEED = {
+  'BEGINNER': 800,
+  'INTERMEDIATE': 500,
+  'ADVANCED': 300,
+  'EXPERT': 200,
+  'SUPER': 150
+}
