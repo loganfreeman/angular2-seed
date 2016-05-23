@@ -6,6 +6,8 @@ import {GridService} from './grid'
 
 import {GameData} from './game-data';
 
+import {NgClass, NgStyle} from '@angular/common';
+
 
 @Component({
   selector: 'sd-tetris',
@@ -14,9 +16,11 @@ import {GameData} from './game-data';
   directives: [MODAL_DIRECTIVES]
 })
 export class TetrisComponent {
-  getGridService(){
-    return GridService.grid;
+
+  constructor(){
+    this.grid = GridService.grid;
   }
+  grid:any[];
 
   getFilledClass(cell:any) {
       var pieceClass = '';

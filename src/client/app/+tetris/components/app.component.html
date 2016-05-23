@@ -1,9 +1,5 @@
 <div class="dy-game-board">
     <div class="dy-grid-container">
-        <div class="dy-grid-cell"
-            *ngFor=="let cell of getGridService()"
-            [ngClass]="getFilledClass(cell)"
-            [ngStyle]="getFilledCustomColor(cell)"></div>
-        <div di-piece></div>
+        <div *ngFor="let cell of grid; let i=index" class="dy-grid-cell" [ngClass]="getFilledClass(cell)" [ngStyle]="getFilledCustomColor(cell)"></div>
     </div>
 </div>
