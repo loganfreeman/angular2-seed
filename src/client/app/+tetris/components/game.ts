@@ -102,6 +102,13 @@ export var posToCoord = _.memoize(function (i:number) {
     };
 });
 
+export var withinGridMem = _.memoize(function (cell:{x:number, y:number}) {
+            return cell.x >= 0 && cell.x < getBoardWidth() &&
+                cell.y >= 0 && cell.y < getBoardHeight();
+        }, function (cell) {
+            return '' + cell.x + cell.y;
+        });
+
 export function generateUID(){
   var d = new Date().getTime();
   var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -112,12 +119,10 @@ export function generateUID(){
   return uuid;
 }
 
-var gridService:GridService = new GridService();
-
 export function buildEmptyGameBoard(){
   var sizeOfBoard = getBoardWidth() * getBoardHeight();
   for (var i = 0; i < sizeOfBoard; i++) {
-      gridService.grid[i] = {
+      GridService.grid[i] = {
           filled: false,
           shape: null,
           ghost: false

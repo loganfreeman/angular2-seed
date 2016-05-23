@@ -2,10 +2,13 @@ import {coordToPosMem, posToCoord, getBoardWidth, getBoardHeight} from './game';
 
 import {Piece} from './piece';
 
-export class GridService {
-  public grid:any[];
+import { Injectable } from '@angular/core';
 
-  updateGhostPiece(cell:any){
+@Injectable()
+export class GridService {
+  public static grid:any[];
+
+  public static updateGhostPiece(cell:any){
     var pos = coordToPosMem(cell);
     if (pos > 0) {
         this.grid[pos].ghost = true;
@@ -13,13 +16,13 @@ export class GridService {
   }
 
 
-  resetGhostPiece() {
+  public static resetGhostPiece() {
       for(var i = 0, len = this.grid.length; i < len; i++) {
           this.grid[i].ghost = false;
       }
   }
 
-  buildEmptyGameBoard() {
+  public static buildEmptyGameBoard() {
       var sizeOfBoard = getBoardWidth() * getBoardHeight();
       for (var i = 0; i < sizeOfBoard; i++) {
           this.grid[i] = {
@@ -30,7 +33,7 @@ export class GridService {
       }
   }
 
-  movePieceDownLevel(row:number) {
+  public static movePieceDownLevel(row:number) {
       for(var i = row - 1; i >= 0; i--) {
           for(var j = 0; j < getBoardWidth(); j++) {
               var curPos = coordToPosMem({x: j, y: i}),
@@ -43,7 +46,7 @@ export class GridService {
       return this;
   }
 
-  clearNthRow(row:number) {
+  public static clearNthRow(row:number) {
       for(var z = 0; z < getBoardWidth(); z++) {
           var pos = coordToPosMem({x: z, y: row});
           this.grid[pos].filled = false;
@@ -52,7 +55,7 @@ export class GridService {
       return this;
   }
 
-  checkAndClearFilledRow(cb:Function) {
+  public static checkAndClearFilledRow(cb:Function) {
       for(var i = 0; i < getBoardHeight(); i++) {
           var j = 0;
           for(; j < getBoardWidth(); j++) {
@@ -71,7 +74,7 @@ export class GridService {
       }
   }
 
-  isPieceVerify(coord: { x: number, y:number}) {
+  public static isPieceVerify(coord: { x: number, y:number}) {
       var pos = coordToPosMem(coord);
       if(this.grid[pos].filled) {
           return false;
@@ -79,7 +82,7 @@ export class GridService {
       return true;
   }
 
-  insertPiece(piece:Piece, gameOver:Function) {
+  public static insertPiece(piece:Piece, gameOver:Function) {
       var coordArray = piece.getPieceCoordArray();
       for (var i = 0; i < coordArray.length; i++) {
           var pos = coordToPosMem(coordArray[i]);

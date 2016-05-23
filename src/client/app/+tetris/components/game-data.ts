@@ -1,35 +1,35 @@
 import {GAMESPEED} from './game';
 export class GameData {
 
-  private customColorChosen:string;
-  public availableColors:number = 5;
-  public gameStart:boolean = false;
-  public gameEnd:boolean = false;
-  public gamePause:boolean = false;
-  public score:number = 0;
-  public savedGameTime:Date = null;
-  public rotationLimit:number = 4;
-  public patternLimit:number = 7;
-  public cssAnimateTimeout:number = 300; // milliseconds
-  public maxCustomPiece:number = 5;
-  public customPieceWidth:number = 4;
+  private static customColorChosen:string;
+  public static availableColors:number = 5;
+  public static gameStart:boolean = false;
+  public static gameEnd:boolean = false;
+  public static gamePause:boolean = false;
+  public static score:number = 0;
+  public static savedGameTime:Date = null;
+  public static rotationLimit:number = 4;
+  public static patternLimit:number = 7;
+  public static cssAnimateTimeout:number = 300; // milliseconds
+  public static maxCustomPiece:number = 5;
+  public static customPieceWidth:number = 4;
 
-  get BestScore(){
+  public static getBestScore(){
     return parseInt(localStorage.getItem('game.bestScore'), 10) || 0;
   }
-  get Color() {
-    return this.customColorChosen;
+  public static getColor() {
+    return GameData.customColorChosen;
   }
 
-  set Color(color:string) {
-    this.customColorChosen = color
+  public static  setColor(color:string) {
+    GameData.customColorChosen = color
   }
 
-  get GameSpeed(){
+  public static getGameSpeed(){
     return parseInt(localStorage.getItem('game.speed'), 10) || GAMESPEED['BEGINNER'];
   }
 
-  set GameSpeed(speed:number){
+  public static setGameSpeed(speed:number){
     localStorage.setItem('game.speed', speed.toString());
   }
 }
