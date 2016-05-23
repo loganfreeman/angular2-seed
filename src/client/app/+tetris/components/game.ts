@@ -1,4 +1,7 @@
 import {GridService} from './grid';
+
+import 'underscore';
+
 export const PATTERNS = [
     [[1, 5, 9, 10], [4, 5, 6, 8], [0, 1, 5, 9], [2, 4, 5, 6]], // L
     [[0, 1, 4, 5], [0, 1, 4, 5], [0, 1, 4, 5], [0, 1, 4, 5]], // O
@@ -82,6 +85,22 @@ export function getBoardWidth(){
 export function getBoardHeight(){
   return board.boardHeight;
 }
+
+export var coordToPosMem = _.memoize(function (pos: {x : number, y: number}) {
+    return (pos.y * getBoardWidth()) + pos.x;
+}, function (pos) {
+    return '' + pos.x + pos.y;
+});
+
+export var posToCoord = _.memoize(function (i:number) {
+    var x = i % getBoardWidth(),
+        y = (i - x) / getBoardWidth();
+
+    return {
+        x: x,
+        y: y
+    };
+});
 
 export function generateUID(){
   var d = new Date().getTime();
