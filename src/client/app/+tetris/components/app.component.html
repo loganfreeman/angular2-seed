@@ -1,0 +1,81 @@
+<div class="dy-home">
+    <div di-game-menu></div>
+    <div class="row">
+        <div class="dy-game-title col-sm-7 col-xs-6">NgTetris</div>
+        <div class="dy-instructions col-sm-5 col-xs-6">
+            {{ sub_title }}
+        </div>
+    </div>
+    <div class="dy-game-container row"
+        data-ng-class="{'dy-top-0': isMobilePlay()}">
+        <div class="col-sm-4 dy-score-container"
+            data-ng-hide="isMobilePlay()">
+            <div data-ng-class="{'dy-section' : getScore() <= 0 && !isGameStart()}">
+                <div class="dy-best-score btn"
+                    data-ng-bind="getBestScore()"></div>
+                <div class="btn dy-speed-role"
+                    data-ng-click="setGameSpeed()"
+                    data-ng-bind="getGameSpeed()">
+                </div>
+                <div class="dy-score btn"
+                    data-ng-bind="getScore()"
+                    ng-show="getScore() > 0 || isGameStart()">
+                </div>
+                <div class="btn dy-design-new-tetris"
+                    data-ng-click="openDesignMenu()"
+                    data-ng-show="!isGameStart()">
+                    <i class="fa fa-puzzle-piece"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <span class="dy-mobile-score"
+                data-ng-bind="getScore()"
+                data-ng-hide="!isMobilePlay()">
+            </span>
+            <span class="dy-mobile-speed"
+                data-ng-bind="getGameSpeed()"
+                data-ng-hide="!isMobilePlay()">
+            </span>
+            <div class="dy-game-control">
+                <!-- game board here -->
+                <div di-game-board></div>
+                <!-- start button here -->
+                <div class="dy-game-start-btn">
+                    <div class="dy-game-start"
+                        data-ng-show="!isGameStart() && !isGameEnd()">
+                        <button class="dy-new-game-btn hollow dy-button"
+                            data-ng-click="startNewGame()">
+                            {{ 'new_game' }}
+                        </button>
+                    </div>
+                    <div class="dy-game-over"
+                        data-ng-show="!isGameStart() && isGameEnd()">
+                        <div data-ng-show="isNewRecord()"
+                            class="dy-new-record pulse">
+                            {{ 'new_record' }}<br>
+                            <span data-ng-bind="getBestScore()"></span>
+                        </div>
+                        <div data-ng-show="!isNewRecord()"
+                            class="dy-your-score">
+                            {{ 'your_score' }}<br>
+                            <span data-ng-bind="getScore()"></span>
+                        </div>
+                        <p>{{ 'game_over' }}</p>
+                        <div class="dy-game-restart">
+                            <button class="dy-new-game-btn hollow dy-button"
+                                data-ng-click="restartNewGame()">
+                                {{ 'try_again' }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dy-how-to-pause row"
+        data-ng-hide="shouldShowMobileControll()">
+        {{ 'press' }} <span class="key light">ESC</span> {{ 'or' }} <span class="key light">P</span> {{ 'pause_keys' }}
+    </div>
+    <hr>
+</div>
