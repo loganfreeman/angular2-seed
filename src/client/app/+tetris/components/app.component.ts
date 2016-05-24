@@ -22,6 +22,24 @@ export class TetrisComponent {
   }
   grid:any[];
 
+  pieces:any[];
+
+  isPieceReady(){
+    return '';
+  }
+
+  getClassForShape(){
+    return '';
+  }
+
+  checkPattern(piece:any){
+    return '';
+  }
+
+  getColor(){
+    return {}
+  }
+
   getFilledClass(cell:any) {
       var pieceClass = '';
       if (cell.filled) {

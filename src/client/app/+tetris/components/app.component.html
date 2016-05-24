@@ -1,5 +1,11 @@
 <div class="dy-game-board">
     <div class="dy-grid-container">
         <div *ngFor="let cell of grid; let i=index" class="dy-grid-cell" [ngClass]="getFilledClass(cell)" [ngStyle]="getFilledCustomColor(cell)"></div>
+        <div class="dy-piece" [ngClass]="isPieceReady()">
+          <ul class="dy-piece-ul" [ngClass]="getClassForShape()">
+            <li *ngFor="let piece of pieces" class="dy-piece-li" [ngClass]="checkPattern(piece)" [ngStyle]="getColor()">
+            </li>
+          </ul>
+        </div>
     </div>
 </div>
