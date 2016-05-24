@@ -8,6 +8,8 @@ import {GameData} from './game-data';
 
 import {NgClass, NgStyle} from '@angular/common';
 
+import 'underscore';
+
 
 @Component({
   selector: 'sd-tetris',
@@ -19,6 +21,7 @@ export class TetrisComponent {
 
   constructor(){
     this.grid = GridService.grid;
+    this.pieces =  _.range(16);
   }
   grid:any[];
 
