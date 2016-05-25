@@ -134,6 +134,39 @@ export class Piece {
     GridService.resetGhostPiece();
   }
 
+  get PositionX() {
+      return this.x;
+  }
+
+  set PositionX(x) {
+      this.x = x;
+  }
+
+  get PositionY() {
+      return this.y;
+  }
+
+  set PositionY(y) {
+      this.y = y;
+  }
+
+  updatePosition(newPosition:{y?:number, x?:number}, cb: () => void) {
+      var isMoveDown = isNaN(newPosition.y) ? false : newPosition.y > this.y;
+      var    x = isNaN(newPosition.x) ? this.x : newPosition.x,
+      y = isNaN(newPosition.y) ? this.y : newPosition.y,
+          isVarify = this.verifyPiece({x: x, y: y});
+
+      if(isVarify) {
+          this.x = x;
+          this.y = y;
+      } else if(!isVarify && isMoveDown) {
+          if (_.isFunction(cb)) {
+              cb();
+          }
+      }
+      return this;
+  }
+
   getPatternCoord() {
       if (_.isUndefined(PATTERN_COOR[this.patterns])) {
           return Piece.getPatternCoord(this.rotation);
@@ -218,7 +251,7 @@ export class Piece {
   }
 
   convertPatternToCoordinates(cell: {x:number, y:number}) {
-      var coord = _.clone(Piece.getPatternCoord.apply(this)),
+      var coord = _.clone(this.getPatternCoord()),
           location = cell || {x: this.x, y: this.y};
       _.each(coord, function (ele, index) {
           coord[index].x += location.x;

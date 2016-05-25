@@ -62,8 +62,31 @@ export class TetrisComponent {
     this.updateGhostPiece();
   }
 
-  moveCurrentPiece(){
+  getPositionX() {
+      return this.currentPiece.PositionX;
+  }
 
+  getPositionY() {
+      return this.currentPiece.PositionY;
+  }
+
+
+  moveCurrentPiece(){
+    var speedY = this.getPositionY() + 1;
+    this.currentPiece.updatePosition({
+        y: speedY
+    }, () => this.insertAndClearRow());
+  }
+
+  insertAndClearRow(){
+    this.insertPiece();
+    GridService.checkAndClearFilledRow(function() {
+        GameData.score += 100;
+    });
+  }
+
+  insertPiece(){
+    
   }
 
   updateGhostPiece(){
