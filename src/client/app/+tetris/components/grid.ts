@@ -6,26 +6,26 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class GridService {
-  public static grid:any[];
+  public static grid:any[] = [];
 
   public static updateGhostPiece(cell:any){
     var pos = coordToPosMem(cell);
     if (pos > 0) {
-        this.grid[pos].ghost = true;
+        GridService.grid[pos].ghost = true;
     }
   }
 
 
   public static resetGhostPiece() {
-      for(var i = 0, len = this.grid.length; i < len; i++) {
-          this.grid[i].ghost = false;
+      for(var i = 0, len = GridService.grid.length; i < len; i++) {
+          GridService.grid[i].ghost = false;
       }
   }
 
   public static buildEmptyGameBoard() {
       var sizeOfBoard = getBoardWidth() * getBoardHeight();
       for (var i = 0; i < sizeOfBoard; i++) {
-          this.grid[i] = {
+          GridService.grid[i] = {
               filled: false,
               shape: null,
               ghost: false
@@ -38,21 +38,21 @@ export class GridService {
           for(var j = 0; j < getBoardWidth(); j++) {
               var curPos = coordToPosMem({x: j, y: i}),
                   nextPos = coordToPosMem({x: j, y: i + 1});
-              this.grid[nextPos] = _.clone(this.grid[curPos]);
-              this.grid[curPos].filled = false;
-              this.grid[curPos].shape = null;
+              GridService.grid[nextPos] = _.clone(GridService.grid[curPos]);
+              GridService.grid[curPos].filled = false;
+              GridService.grid[curPos].shape = null;
           }
       }
-      return this;
+      return GridService;
   }
 
   public static clearNthRow(row:number) {
       for(var z = 0; z < getBoardWidth(); z++) {
           var pos = coordToPosMem({x: z, y: row});
-          this.grid[pos].filled = false;
-          this.grid[pos].shape = null;
+          GridService.grid[pos].filled = false;
+          GridService.grid[pos].shape = null;
       }
-      return this;
+      return GridService;
   }
 
   public static checkAndClearFilledRow(cb:Function) {
@@ -60,13 +60,13 @@ export class GridService {
           var j = 0;
           for(; j < getBoardWidth(); j++) {
               var pos = coordToPosMem({x: j, y: i});
-              if(!this.grid[pos].filled) {
+              if(!GridService.grid[pos].filled) {
                   break;
               }
           }
           if(j === getBoardWidth()) {
               // clear the row
-              this
+              GridService
                   .clearNthRow(i)
                   .movePieceDownLevel(i);
               cb();
@@ -76,7 +76,7 @@ export class GridService {
 
   public static isPieceVerify(coord: { x: number, y:number}) {
       var pos = coordToPosMem(coord);
-      if(this.grid[pos].filled) {
+      if(GridService.grid[pos].filled) {
           return false;
       }
       return true;
@@ -86,11 +86,11 @@ export class GridService {
       var coordArray = piece.getPieceCoordArray();
       for (var i = 0; i < coordArray.length; i++) {
           var pos = coordToPosMem(coordArray[i]);
-          if (this.grid[pos].filled) {
+          if (GridService.grid[pos].filled) {
               gameOver();
           } else {
-              this.grid[pos].filled = true;
-              this.grid[pos].shape = piece.getShape();
+              GridService.grid[pos].filled = true;
+              GridService.grid[pos].shape = piece.getShape();
           }
       }
   }

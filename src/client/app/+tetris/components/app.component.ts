@@ -23,6 +23,10 @@ export class TetrisComponent {
     this.grid = GridService.grid;
     this.pieces =  _.range(16);
   }
+
+  startGame(){
+    GridService.buildEmptyGameBoard();
+  }
   grid:any[];
 
   pieces:any[];
