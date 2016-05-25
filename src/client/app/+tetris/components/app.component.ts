@@ -62,6 +62,11 @@ export class TetrisComponent {
     this.updateGhostPiece();
   }
 
+  gameOver(){
+    this.isStart = false;
+    this.isPause = false;
+  }
+
   getPositionX() {
       return this.currentPiece.PositionX;
   }
@@ -86,11 +91,15 @@ export class TetrisComponent {
   }
 
   insertPiece(){
-    
+    GridService.insertPiece(this.currentPiece, () => this.gameOver());
+    this.currentPiece.destroy();
+    this.currentPiece = null;
   }
 
   updateGhostPiece(){
-
+    if (this.currentPiece) {
+        this.currentPiece.updateGhostPiece();
+    }
   }
 
   getGameSpeed(){

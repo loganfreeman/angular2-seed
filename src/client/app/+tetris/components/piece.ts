@@ -11,8 +11,6 @@ import 'underscore';
 
 export class Piece {
 
-  private _coordArray:Coordinate[];
-
   private static patternCoord2d: any[] = [];
   private static pattern2d: any[] = [];
 
@@ -154,12 +152,12 @@ export class Piece {
       var isMoveDown = isNaN(newPosition.y) ? false : newPosition.y > this.y;
       var    x = isNaN(newPosition.x) ? this.x : newPosition.x,
       y = isNaN(newPosition.y) ? this.y : newPosition.y,
-          isVarify = this.verifyPiece({x: x, y: y});
+          isVerified = this.verifyPiece({x: x, y: y});
 
-      if(isVarify) {
+      if(isVerified) {
           this.x = x;
           this.y = y;
-      } else if(!isVarify && isMoveDown) {
+      } else if(!isVerified && isMoveDown) {
           if (_.isFunction(cb)) {
               cb();
           }
@@ -176,7 +174,7 @@ export class Piece {
   }
 
   getPieceCoordArray(): Coordinate[] {
-    return this._coordArray;
+    return this.convertPatternToCoordinates();
   }
 
   getShape() {
@@ -250,7 +248,7 @@ export class Piece {
       return cell;
   }
 
-  convertPatternToCoordinates(cell: {x:number, y:number}) {
+  convertPatternToCoordinates(cell?: {x:number, y:number}) {
       var coord = _.clone(this.getPatternCoord()),
           location = cell || {x: this.x, y: this.y};
       _.each(coord, function (ele, index) {

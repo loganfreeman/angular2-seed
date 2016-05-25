@@ -82,7 +82,7 @@ export class GridService {
       return true;
   }
 
-  public static insertPiece(piece:Piece, gameOver:Function) {
+  public static insertPiece(piece:Piece, gameOver:() => void) {
       var coordArray = piece.getPieceCoordArray();
       for (var i = 0; i < coordArray.length; i++) {
           var pos = coordToPosMem(coordArray[i]);
