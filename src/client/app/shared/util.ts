@@ -39,7 +39,7 @@ function shuffle(list:any) {
 
 function zip(arrays:any[]) {
     return arrays[0].map(function(_:any,i:number){
-        return arrays.map(function(array){return array[i]})
+        return arrays.map((array) => array[i]);
     });
 }
 

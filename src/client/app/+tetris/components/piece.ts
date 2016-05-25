@@ -4,7 +4,9 @@ import {GameData} from './game-data';
 
 import {GridService} from './grid';
 
-import {generateUID, withinGridMem, coordToPosMem, posToCoord, getBoardWidth, getBoardHeight, ROTATION_MATRIX, PATTERN_COOR, PATTERNS} from './game';
+import {generateUID, withinGridMem, coordToPosMem, posToCoord,
+  getBoardWidth, getBoardHeight, ROTATION_MATRIX, PATTERN_COOR, PATTERNS
+} from './game';
 
 import 'underscore';
 
@@ -13,6 +15,46 @@ export class Piece {
 
   private static patternCoord2d: any[] = [];
   private static pattern2d: any[] = [];
+
+  public x:number;
+  public y:number;
+  public rotation:number;
+  public patterns: number;
+  public id:string;
+
+
+
+  public static destroyCustomPiece () {
+      Piece.pattern2d = [];
+      Piece.patternCoord2d = [];
+  }
+
+  public static generatePatternCoord() {
+      // set up the first patter coord
+      Piece.setPatternToCoord(Piece.pattern2d[0]);
+
+      for(var deg in [90, 180, 270]) {
+          // deg is index [0, 1, 2]
+          // patternCoor2d has init with orgin coord
+          // so index + 1 to move to next rotation
+          Piece.getRotatePattern(Piece.patternCoord2d[0], parseInt(deg, 10) + 1);
+      }
+
+      Piece.setPatternCoord2d();
+  }
+
+  public static generatePatterns(pieces:any[]) {
+      var pattern:any[] = [];
+      Piece.pattern2d = [];
+      Piece.patternCoord2d = [];
+      _.each(pieces, function (piece, index) {
+          if (piece.isSelected) {
+              pattern.push(index);
+          }
+      });
+      Piece.pattern2d.push(pattern);
+      Piece.generatePatternCoord();
+  }
 
   public static getPattern(rotation:number) {
       return Piece.pattern2d[rotation];
@@ -79,45 +121,8 @@ export class Piece {
       Piece.pattern2d.push(pattern);
   }
 
-  public static destroyCustomPiece () {
-      Piece.pattern2d = [];
-      Piece.patternCoord2d = [];
-  }
 
-  public static generatePatternCoord() {
-      // set up the first patter coord
-      Piece.setPatternToCoord(Piece.pattern2d[0]);
-
-      for(var deg in [90, 180, 270]) {
-          // deg is index [0, 1, 2]
-          // patternCoor2d has init with orgin coord
-          // so index + 1 to move to next rotation
-          Piece.getRotatePattern(Piece.patternCoord2d[0], parseInt(deg, 10) + 1);
-      }
-
-      Piece.setPatternCoord2d();
-  }
-
-  public static generatePatterns(pieces:any[]) {
-      var pattern:any[] = [];
-      Piece.pattern2d = [];
-      Piece.patternCoord2d = [];
-      _.each(pieces, function (piece, index) {
-          if (piece.isSelected) {
-              pattern.push(index);
-          }
-      });
-      Piece.pattern2d.push(pattern);
-      Piece.generatePatternCoord();
-  }
-
-  public x:number;
-  public y:number;
-  public rotation:number;
-  public patterns: number;
-  public id:string;
-
-  constructor(pos: {x:number, y:number}){
+  constructor(pos: {x:number, y:number}) {
     var position = pos || {
             x: 4,
             y: 0

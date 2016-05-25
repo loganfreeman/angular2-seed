@@ -1,7 +1,6 @@
 import {GAMESPEED} from './game';
 export class GameData {
 
-  private static customColorChosen:string;
   public static availableColors:number = 5;
   public static gameStart:boolean = false;
   public static gameEnd:boolean = false;
@@ -14,7 +13,10 @@ export class GameData {
   public static maxCustomPiece:number = 5;
   public static customPieceWidth:number = 4;
 
-  public static getBestScore(){
+  private static customColorChosen:string;
+
+
+  public static getBestScore() {
     return parseInt(localStorage.getItem('game.bestScore'), 10) || 0;
   }
   public static getColor() {
@@ -22,14 +24,14 @@ export class GameData {
   }
 
   public static  setColor(color:string) {
-    GameData.customColorChosen = color
+    GameData.customColorChosen = color;
   }
 
-  public static getGameSpeed(){
+  public static getGameSpeed() {
     return parseInt(localStorage.getItem('game.speed'), 10) || GAMESPEED['BEGINNER'];
   }
 
-  public static setGameSpeed(speed:number){
+  public static setGameSpeed(speed:number) {
     localStorage.setItem('game.speed', speed.toString());
   }
 }

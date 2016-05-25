@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 import {partition} from '../../shared/util';
 import {RowComponent} from './row.component';
 import  {List } from 'immutable';
@@ -11,7 +11,7 @@ import {isGameOver, revealTile} from './game';
   templateUrl: 'app/+lightout/components/lightout.component.html',
   directives: [RowComponent]
 })
-export class LightOutComponent {
+export class LightOutComponent implements OnChanges {
   @Input() game: any;
 
   @Output() tileClick: EventEmitter<any> = new EventEmitter();
@@ -20,30 +20,26 @@ export class LightOutComponent {
 
   rows:any;
 
-  constructor() {
-
-  }
-
-  ngOnChanges(changes:any){
+  ngOnChanges(changes:any) {
     // Only update game when game has actually changed
-    if(changes.hasOwnProperty('game') && this.game){
-      this.updateGame()
+    if(changes.hasOwnProperty('game') && this.game) {
+      this.updateGame();
     }
   }
 
 
-  updateGame(updateHistory = true){
+  updateGame(updateHistory = true) {
     this.rows = partition(this.game.get('cols'), this.game.get('tiles'));
 
-    if(updateHistory){
+    if(updateHistory) {
       this.history = this.history.push(this.game);
     }
   }
 
-  handleTileClick(tile:any){
+  handleTileClick(tile:any) {
     this.tileClick.next(tile);
 
-    if(!tile){
+    if(!tile) {
       return;
     }
 
@@ -60,7 +56,7 @@ export class LightOutComponent {
     }
   }
 
-  undo(){
+  undo() {
     if (this.canUndo()) {
       this.history = this.history.pop();
       this.game = this.history.last();
@@ -71,7 +67,7 @@ export class LightOutComponent {
     }
   }
 
-  canUndo(){
+  canUndo() {
     return this.history.size > 1;
   }
 }

@@ -68,7 +68,7 @@ export const board = {
     pieceWidthInPixel: 25, // match the pixel of piece in grid
     boardWidth: 10,
     boardHeight: 20
-}
+};
 
 export const GAMESPEED = {
   'BEGINNER': 800,
@@ -76,13 +76,13 @@ export const GAMESPEED = {
   'ADVANCED': 300,
   'EXPERT': 200,
   'SUPER': 150
-}
+};
 
-export function getBoardWidth(){
+export function getBoardWidth() {
   return board.boardWidth;
 }
 
-export function getBoardHeight(){
+export function getBoardHeight() {
   return board.boardHeight;
 }
 
@@ -109,7 +109,7 @@ export var withinGridMem = _.memoize(function (cell:{x:number, y:number}) {
             return '' + cell.x + cell.y;
         });
 
-export function generateUID(){
+export function generateUID() {
   var d = new Date().getTime();
   var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     var r = (d + Math.random()*16)%16 | 0;
@@ -119,7 +119,7 @@ export function generateUID(){
   return uuid;
 }
 
-export function buildEmptyGameBoard(){
+export function buildEmptyGameBoard() {
   var sizeOfBoard = getBoardWidth() * getBoardHeight();
   for (var i = 0; i < sizeOfBoard; i++) {
       GridService.grid[i] = {

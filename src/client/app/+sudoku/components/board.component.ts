@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 
 import {RowComponent} from './row.component';
 
@@ -13,7 +13,7 @@ import {isGameOver, revealTile} from './game';
   templateUrl: 'app/+sudoku/components/board.component.html',
   directives: [RowComponent]
 })
-export class BoardComponent {
+export class BoardComponent implements OnChanges {
   history = List();
 
   rows:any;
@@ -22,17 +22,17 @@ export class BoardComponent {
 
   @Output() tileClick: EventEmitter<any> = new EventEmitter();
 
-  ngOnChanges(changes:any){
+  ngOnChanges(changes:any) {
     // Only update game when game has actually changed
-    if(changes.hasOwnProperty('game') && this.game){
-      this.updateGame()
+    if(changes.hasOwnProperty('game') && this.game) {
+      this.updateGame();
     }
   }
 
-  handleTileClick(tile:any){
+  handleTileClick(tile:any) {
     this.tileClick.next(tile);
 
-    if(!tile){
+    if(!tile) {
       return;
     }
 
@@ -49,15 +49,15 @@ export class BoardComponent {
     }
   }
 
-  updateGame(updateHistory = true){
+  updateGame(updateHistory = true) {
     this.rows = partition(this.game.get('cols'), this.game.get('tiles'));
 
-    if(updateHistory){
+    if(updateHistory) {
       this.history = this.history.push(this.game);
     }
   }
 
-  undo(){
+  undo() {
     if (this.canUndo()) {
       this.history = this.history.pop();
       this.game = this.history.last();
@@ -68,7 +68,7 @@ export class BoardComponent {
     }
   }
 
-  canUndo(){
+  canUndo() {
     return this.history.size > 1;
   }
 }

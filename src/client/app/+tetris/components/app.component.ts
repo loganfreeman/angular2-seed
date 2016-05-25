@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 
 import { MODAL_DIRECTIVES, ModalResult, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
-import {GridService} from './grid'
+import {GridService} from './grid';
 
 import {GameData} from './game-data';
 
@@ -23,46 +23,52 @@ export class TetrisComponent {
 
   isPause:boolean = false;
   isStart:boolean = false;
-  constructor(){
+  grid:any[];
+
+  pieces:any[];
+
+  currentPiece:Piece;
+  loop:Function = _.throttle(this.gameLoop, this.getGameSpeed(), {
+      leading: false,
+      trailing: false
+  });
+  constructor() {
     this.grid = GridService.grid;
     this.pieces =  _.range(16);
     this.gameOn();
   }
 
-  loop:Function = _.throttle(this.gameLoop, this.getGameSpeed(), {
-      leading: false,
-      trailing: false
-  })
 
-  gameOn(){
+
+  gameOn() {
     window.requestAnimationFrame(() => this.gameOn()); // use arrow functions to lexically capture this
     if(!this.isGamePause() && this.isGameStart()) {
         this.loop();
     }
   }
 
-  isGamePause(){
+  isGamePause() {
     return this.isPause;
   }
 
-  isGameStart(){
+  isGameStart() {
     return this.isStart;
   }
 
-  toggleGamePause(){
+  toggleGamePause() {
     this.isPause = !this.isPause;
   }
 
-  setGameStart(){
+  setGameStart() {
     this.isStart = true;
   }
 
-  gameLoop(){
+  gameLoop() {
     this.moveCurrentPiece();
     this.updateGhostPiece();
   }
 
-  gameOver(){
+  gameOver() {
     this.isStart = false;
     this.isPause = false;
   }
@@ -76,71 +82,67 @@ export class TetrisComponent {
   }
 
 
-  moveCurrentPiece(){
+  moveCurrentPiece() {
     var speedY = this.getPositionY() + 1;
     this.currentPiece.updatePosition({
         y: speedY
     }, () => this.insertAndClearRow());
   }
 
-  insertAndClearRow(){
+  insertAndClearRow() {
     this.insertPiece();
     GridService.checkAndClearFilledRow(function() {
         GameData.score += 100;
     });
   }
 
-  insertPiece(){
+  insertPiece() {
     GridService.insertPiece(this.currentPiece, () => this.gameOver());
     this.currentPiece.destroy();
     this.currentPiece = null;
   }
 
-  updateGhostPiece(){
+  updateGhostPiece() {
     if (this.currentPiece) {
         this.currentPiece.updateGhostPiece();
     }
   }
 
-  getGameSpeed(){
+  getGameSpeed() {
     return GameData.getGameSpeed();
   }
 
-  startGame(){
+  startGame() {
     GridService.buildEmptyGameBoard();
     this.createNewPiece();
     this.setGameStart();
   }
-  resetGame(){
+  resetGame() {
     GridService.buildEmptyGameBoard();
   }
 
-  createNewPiece(){
+  createNewPiece() {
     this.currentPiece = new Piece({
         x: 4,
         y: 0
     });
   }
-  grid:any[];
 
-  pieces:any[];
 
-  currentPiece:Piece;
-
-  isPieceReady(){
+  isPieceReady() {
     return '';
   }
 
-  getClassForShape(){
+  getClassForShape() {
     return '';
   }
 
-  checkPattern(piece:any){
+  checkPattern(piece:any) {
     return '';
   }
 
-  getColor(){
-    return {}
+  getColor() {
+    return {};
   }
 
   getFilledClass(cell:any) {
@@ -176,8 +178,8 @@ export class TetrisComponent {
           return {
               'background-color': GameData.getColor()
           };
-      }else{
-        return {}
+      }else {
+        return {};
       }
   }
 }

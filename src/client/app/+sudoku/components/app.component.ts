@@ -32,28 +32,25 @@ export class SudokuAppComponent {
   @ViewChild('alertModal')
   alert: ModalComponent;
 
-  constructor() {
 
-  }
-
-  onInit(){
+  onInit() {
     this.startNewGame();
   }
 
-  startNewGame(){
+  startNewGame() {
     this.game = createGame(9, 9);
     this.gameJson = JSON.stringify(this.game.toJSON(), null, 2);
   }
 
-  solvePuzzle(){
+  solvePuzzle() {
     this.game = solve(this.game);
   }
 
-  toggleShowJson(){
+  toggleShowJson() {
     this.isShowJson = !this.isShowJson;
   }
 
-  handleTileClick(tile:any){
+  handleTileClick(tile:any) {
     this.selectedTile = tile;
     this.tileJson = JSON.stringify(tile.toJSON(), null, 2);
     this.modal.open();
@@ -61,9 +58,9 @@ export class SudokuAppComponent {
 
   onClose() {
     var allowed = getAllowed(this.game, this.selectedTile.get('id'));
-    if(!contains(allowed, this.modalSelected)){
+    if(!contains(allowed, this.modalSelected)) {
       this.alert.open();
-    }else{
+    }else {
       this.selected = this.modalSelected;
       this.game = revealTile(setTile(this.game, this.selectedTile.get('id'), this.selected), this.selectedTile.get('id'));
     }

@@ -67,7 +67,7 @@ function isMine(game:any, tile:any) {
 }
 
 function toggleMine(game:any, tile:any) {
-  return isMine(game, tile)? game.setIn(['tiles', tile, 'isMine'], false) : game.setIn(['tiles', tile, 'isMine'], true);;
+  return isMine(game, tile)? game.setIn(['tiles', tile, 'isMine'], false) : game.setIn(['tiles', tile, 'isMine'], true);
 }
 
 function toggleNeighbours(game:any, tile:any) {
@@ -79,7 +79,7 @@ function toggleNeighbours(game:any, tile:any) {
   }, game);
 }
 
-export function createGame(options:any){
+export function createGame(options:any) {
   return fromJS({
     cols: options.cols,
     rows: options.rows,
@@ -88,11 +88,11 @@ export function createGame(options:any){
   });
 }
 
-export function isGameOver(game:any){
+export function isGameOver(game:any) {
   return false;
 }
 
-export function revealTile(game:any, tile:any){
+export function revealTile(game:any, tile:any) {
   const updated = !game.getIn(['tiles', tile]) ?
           game : toggleNeighbours(game, tile);
   return updated;

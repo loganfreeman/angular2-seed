@@ -1,6 +1,6 @@
 import 'underscore';
 
-export function makeSudoku(){
+export function makeSudoku() {
   return makePuzzle(solvePuzzle(makeArray(81, null)));
 }
 
@@ -15,7 +15,7 @@ function makePuzzle(board: number[]) {
   for (var i = 0; i < order.length; i++) {
     var pos = order[i];
 
-    if (deduced[pos] == null) {
+    if (deduced[pos] === null) {
       puzzle.push({ pos: pos, num: board[pos] });
       deduced[pos] = board[pos];
       deduce(deduced);
@@ -29,7 +29,7 @@ function makePuzzle(board: number[]) {
     removeElement(puzzle, i, null);
 
     var rating = checkPuzzle(boardforentries(puzzle), board);
-    if (rating == -1) {
+    if (rating === -1) {
       puzzle.push(e);
     }
   }
@@ -38,9 +38,6 @@ function makePuzzle(board: number[]) {
 
 }
 
-function ratePuzzle() {
-
-}
 
 function boardforentries(entries:any[]) {
 	var board = _.map(_.range(81), function(val, key) {
@@ -60,7 +57,7 @@ function boardforentries(entries:any[]) {
 
 function boardMatches(b1:any[], b2:any[]) {
 	for (var i = 0; i < 81; i++) {
-		if (b1[i] != b2[i]) {
+		if (b1[i] !== b2[i]) {
 			return false;
 		}
 	}
@@ -70,23 +67,23 @@ function boardMatches(b1:any[], b2:any[]) {
 
 
 function checkPuzzle(puzzle: any[], board: number[]) {
-  if (board == undefined) {
+  if (board === undefined) {
 		board = null;
 	}
 
 	var tuple1 = solveBoard(puzzle);
-	if (tuple1.answer == null) {
+	if (tuple1.answer === null) {
 		return -1;
 	}
 
-	if (board != null && boardMatches(board, tuple1.answer) == false) {
+	if (board !== null && boardMatches(board, tuple1.answer) === false) {
 		return -1;
 	}
 
 	var difficulty = tuple1.state.length;
 	var tuple2     = solveNext(tuple1.state);
 
-	if (tuple2.answer != null) {
+	if (tuple2.answer !== null) {
 		return -1;
 	}
 
@@ -101,7 +98,7 @@ export function solveBoard(original:number[]) {
   var board   = [].concat(original);
 	var guesses = deduce(board);
 
-	if (guesses == null) {
+	if (guesses === null) {
 		return {state:[], answer:board};
 	}
 
@@ -125,7 +122,7 @@ function solveNext(remembered: any[]) {
 
     var guesses = deduce(workspace);
 
-    if (guesses == null) {
+    if (guesses === null) {
       return {state:remembered, answer:workspace};
     }
 
@@ -147,16 +144,14 @@ function deduce(board: number[]) {
     var needed = tuple1.needed;
 
     for (var pos = 0; pos < 81; pos++) {
-	    	if (board[pos] == null) {
+	    	if (board[pos] === null) {
         var numbers = listbits(allowed[pos]);
-        if (numbers.length == 0) {
+        if (numbers.length === 0) {
           return [];
-        }
-        else if (numbers.length == 1) {
+        }else if (numbers.length === 1) {
           board[pos] = numbers[0];
           stuck = false;
-        }
-        else if (stuck == true) {
+        }else if (stuck === true) {
           var t = _.map(numbers, function(val, key) {
             return { pos: pos, num: val };
           });
@@ -168,7 +163,7 @@ function deduce(board: number[]) {
 	    	}
     }
 
-    if (stuck == false) {
+    if (stuck === false) {
 		    var tuple3 = figurebits(board);
 		    allowed = tuple3.allowed;
 		    needed = tuple3.needed;
@@ -191,14 +186,12 @@ function deduce(board: number[]) {
             }
           }
 
-          if (spots.length == 0) {
+          if (spots.length === 0) {
             return [];
-          }
-          else if (spots.length == 1) {
+          }else if (spots.length === 1) {
             board[spots[0]] = n;
             stuck = false;
-          }
-          else if (stuck) {
+          }else if (stuck) {
             var t: { pos: number; num: number }[] = _.map(spots, function(val, key) {
               return { pos: val, num: n };
             });
@@ -211,8 +204,8 @@ function deduce(board: number[]) {
 	    	}
     }
 
-    if (stuck == true) {
-    		if (guess != null) {
+    if (stuck === true) {
+    		if (guess !== null) {
         shuffleArray(guess);
     		}
 
@@ -224,13 +217,11 @@ function deduce(board: number[]) {
 
 //
 function pickbetter(b: any[], c: number, t: any[]) {
-  if (b == null || t.length < b.length) {
+  if (b === null || t.length < b.length) {
     return { guess: t, count: 1 };
-  }
-  else if (t.length > b.length) {
+  }else if (t.length > b.length) {
     return { guess: b, count: c };
-  }
-  else if (randomInt(c) == 0) {
+  }else if (randomInt(c) === 0) {
     return { guess: t, count: c + 1 };
   }
 
@@ -241,7 +232,7 @@ function pickbetter(b: any[], c: number, t: any[]) {
 function figurebits(board: number[]) {
   var needed: number[] = [];
   var allowed = _.map(board, function(val, key) {
-    return val == null ? 511 : 0;
+    return val === null ? 511 : 0;
   }, []);
 
   // for three axis, a total of 27 axis to check
@@ -273,7 +264,7 @@ function axismissing(board: number[], x: number, axis: number) {
   for (var y = 0; y < 9; y++) {
     var e = board[posfor(x, y, axis)];
 
-    if (e != null) {
+    if (e !== null) {
       bits |= 1 << e;
     }
   }
@@ -283,16 +274,15 @@ function axismissing(board: number[], x: number, axis: number) {
 
 // three axis
 function posfor(x: number, y: number, axis: number) {
-  if (axis == undefined) { axis = 0; }
+  if (axis === undefined) { axis = 0; }
 
-  if (axis == 0) {
+  if (axis === 0) {
     return x * 9 + y;
-  }
-  else if (axis == 1) {
+  }else if (axis === 1) {
     return y * 9 + x;
   }
 
-  return ([0, 3, 6, 27, 30, 33, 54, 57, 60][x] + [0, 1, 2, 9, 10, 11, 18, 19, 20][y])
+  return ([0, 3, 6, 27, 30, 33, 54, 57, 60][x] + [0, 1, 2, 9, 10, 11, 18, 19, 20][y]);
 }
 
 // given a number, list its bits,
@@ -302,7 +292,7 @@ function posfor(x: number, y: number, axis: number) {
 function listbits(bits: number) {
   var list: number[] = [];
   for (var y = 0; y < 9; y++) {
-    if ((bits & (1 << y)) != 0) {
+    if ((bits & (1 << y)) !== 0) {
       list.push(y);
     }
   }
@@ -311,10 +301,9 @@ function listbits(bits: number) {
 }
 
 function axisfor(pos:number, axis:number) {
-	if (axis == 0) {
+	if (axis === 0) {
 		return Math.floor(pos / 9);
-	}
-	else if (axis == 1) {
+	}else if (axis === 1) {
 		return pos % 9;
 	}
 
@@ -334,13 +323,11 @@ export function allowed(board:number[], pos:number):number[] {
 
 
 function pickBetter(b: any[], c: number, t: any[]) {
-  if (b == null || t.length < b.length) {
+  if (b === null || t.length < b.length) {
     return { guess: t, count: 1 };
-  }
-  else if (t.length > b.length) {
+  }else if (t.length > b.length) {
     return { guess: b, count: c };
-  }
-  else if (randomInt(c) == 0) {
+  }else if (randomInt(c) === 0) {
     return { guess: t, count: c + 1 };
   }
 
@@ -349,7 +336,7 @@ function pickBetter(b: any[], c: number, t: any[]) {
 
 function boardMatched(b1: number[], b2: number[]): boolean {
   for (var i = 0; i < 81; i++) {
-    if (b1[i] != b2[i]) {
+    if (b1[i] !== b2[i]) {
       return false;
     }
   }
@@ -363,7 +350,7 @@ function randomInt(max: number) {
 function shuffleArray(original: number[]) {
   for (var i = 0; i < original.length; i++) {
     var j = i;
-    while (j == i) {
+    while (j === i) {
       j = Math.floor(Math.random() * original.length);
     }
     var contents = original[i];
@@ -381,7 +368,5 @@ function removeElement(array: number[], from: number, to: number) {
 
 
 function makeArray(length: number, value: number) {
-  return _.map(_.range(length), function(val, key) {
-    return value;
-  })
+  return _.map(_.range(length), (val, key) => value);
 }

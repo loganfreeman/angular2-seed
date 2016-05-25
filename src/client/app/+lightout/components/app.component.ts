@@ -15,24 +15,22 @@ export class LightOutAppComponent {
   public gameJson:any;
   public isShowJson:boolean;
   public tile:any;
-  constructor() {
 
-  }
 
-  onInit(){
+  onInit() {
     this.startNewGame();
   }
 
-  startNewGame(){
+  startNewGame() {
     this.game = createGame({cols: 16, rows: 16, mines: 48});
     this.gameJson = JSON.stringify(this.game.toJSON(), null, 2);
   }
 
-  toggleShowJson(){
+  toggleShowJson() {
     this.isShowJson = !this.isShowJson;
   }
 
-  handleTileClick(tile:any){
+  handleTileClick(tile:any) {
     this.tile = JSON.stringify(tile.toJSON(), null, 2);
   }
 }

@@ -11,7 +11,7 @@ export class RowComponent {
 
   @Output() tileClick: EventEmitter<any> = new EventEmitter();
 
-  handleTileClick(tile:any){
+  handleTileClick(tile:any) {
     this.tileClick.emit(tile);
   }
 }

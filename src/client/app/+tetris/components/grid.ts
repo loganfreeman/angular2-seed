@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 export class GridService {
   public static grid:any[] = [];
 
-  public static updateGhostPiece(cell:any){
+  public static updateGhostPiece(cell:any) {
     var pos = coordToPosMem(cell);
     if (pos > 0) {
         GridService.grid[pos].ghost = true;

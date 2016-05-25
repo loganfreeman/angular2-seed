@@ -14,22 +14,22 @@ function getRandomInt(min: number, max : number) {
   return Math.floor( Math.random() * ( max + 1 ) ) + min;
 }
 
-function makeTiles(board:number[]){
+function makeTiles(board:number[]) {
   return board.map(function (value:number, idx:number) {
-      var tile:any = Map({isRevealed: value != null});
+      var tile:any = Map({isRevealed: value !== null});
       tile = tile.set('id', idx);
       tile = tile.set('value', value);
       return tile;
     });
 }
 
-function initTiles(rows: number = 9, cols: number = 9){
+function initTiles(rows: number = 9, cols: number = 9) {
   var board = makeSudoku();
   return makeTiles(board);
 
 }
 
-export function createGame(rows: number = 9, cols: number = 9){
+export function createGame(rows: number = 9, cols: number = 9) {
   return fromJS({
     cols: cols,
     rows: rows,
@@ -38,42 +38,32 @@ export function createGame(rows: number = 9, cols: number = 9){
   });
 }
 
-export function isGameOver(game:any){
+export function isGameOver(game:any) {
   return false;
 }
 
-export function revealTile(game:any, tile:any){
+export function revealTile(game:any, tile:any) {
   const updated = !game.getIn(['tiles', tile]) ?
           game : game.setIn(['tiles', tile, 'isRevealed'], true);
   return updated;
 }
 
-export function setTile(game:any, tile:any, value:any){
+export function setTile(game:any, tile:any, value:any) {
   const updated = !game.getIn(['tiles', tile]) ?
           game : game.setIn(['tiles', tile, 'value'], value);
   return updated;
 }
 
-export function validateTile(tile:any){
 
-}
 
-export function validateMatrix(game:any){
-
-}
-
-export function getAllowed(game:any, pos:number){
-  var board:number[] = game.get('tiles').toArray().map(function(tile:any,idx:number){
-    return tile.get('value');
-  })
+export function getAllowed(game:any, pos:number) {
+  var board:number[] = game.get('tiles').toArray().map((tile:any,idx:number) => tile.get('value'));
 
   return allowed(board, pos);
 }
 
-export function solve(game:any){
-  var board:number[] = game.get('tiles').toArray().map(function(tile:any,idx:number){
-    return tile.get('value');
-  })
+export function solve(game:any) {
+  var board:number[] = game.get('tiles').toArray().map((tile:any,idx:number) => tile.get('value'));
 
   return fromJS({
     cols: 9,
