@@ -19,12 +19,55 @@ import 'underscore';
 })
 export class TetrisComponent {
 
+  isPause:boolean = false;
+  isStart:boolean = false;
   constructor(){
     this.grid = GridService.grid;
     this.pieces =  _.range(16);
+    this.gameOn();
+  }
+
+  loop:Function = _.throttle(this.gameLoop, this.getGameSpeed(), {
+      leading: false,
+      trailing: false
+  })
+
+  gameOn(){
+    window.requestAnimationFrame(() => this.gameOn()); // use arrow functions to lexically capture this
+    if(!this.isGamePause() && this.isGameStart()) {
+        this.loop();
+    }
+  }
+
+  isGamePause(){
+    return this.isPause;
+  }
+
+  isGameStart(){
+    return this.isStart;
+  }
+
+  gameLoop(){
+    this.moveCurrentPiece();
+    this.updateGhostPiece();
+  }
+
+  moveCurrentPiece(){
+
+  }
+
+  updateGhostPiece(){
+
+  }
+
+  getGameSpeed(){
+    return GameData.getGameSpeed();
   }
 
   startGame(){
+    GridService.buildEmptyGameBoard();
+  }
+  resetGame(){
     GridService.buildEmptyGameBoard();
   }
   grid:any[];
