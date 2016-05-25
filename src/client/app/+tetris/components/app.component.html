@@ -10,5 +10,6 @@
     </div>
 </div>
 <div class='btn-group'>
-  <button type="button" class="btn btn-secondary" (click)="startGame()">Start</button>
+  <button type="button" class="btn btn-secondary" (click)="startGame()" [disabled]="isStart">Start</button>
+  <button type="button" class="btn btn-secondary" (click)="toggleGamePause()">{{ isPause ? 'Resume' : 'Pause'}}</button>
 </div>

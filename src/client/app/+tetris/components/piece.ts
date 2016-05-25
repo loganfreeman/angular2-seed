@@ -13,8 +13,8 @@ export class Piece {
 
   private _coordArray:Coordinate[];
 
-  private static patternCoord2d: any[];
-  private static pattern2d: any[];
+  private static patternCoord2d: any[] = [];
+  private static pattern2d: any[] = [];
 
   public static getPattern(rotation:number) {
       return Piece.pattern2d[rotation];

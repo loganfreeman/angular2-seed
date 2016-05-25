@@ -8,6 +8,8 @@ import {GameData} from './game-data';
 
 import {NgClass, NgStyle} from '@angular/common';
 
+import {Piece} from './piece';
+
 import 'underscore';
 
 
@@ -47,6 +49,14 @@ export class TetrisComponent {
     return this.isStart;
   }
 
+  toggleGamePause(){
+    this.isPause = !this.isPause;
+  }
+
+  setGameStart(){
+    this.isStart = true;
+  }
+
   gameLoop(){
     this.moveCurrentPiece();
     this.updateGhostPiece();
@@ -66,13 +76,24 @@ export class TetrisComponent {
 
   startGame(){
     GridService.buildEmptyGameBoard();
+    this.createNewPiece();
+    this.setGameStart();
   }
   resetGame(){
     GridService.buildEmptyGameBoard();
   }
+
+  createNewPiece(){
+    this.currentPiece = new Piece({
+        x: 4,
+        y: 0
+    });
+  }
   grid:any[];
 
   pieces:any[];
+
+  currentPiece:Piece;
 
   isPieceReady(){
     return '';
