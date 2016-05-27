@@ -4,6 +4,34 @@ export function makeSudoku() {
   return makePuzzle(solvePuzzle(makeArray(81, null)));
 }
 
+export function allowed(board:number[], pos:number):number[] {
+	var bits = 511;
+
+	for (var axis = 0; axis < 3; axis++) {
+		var x = axisfor(pos, axis);
+		bits = bits & axismissing(board, x, axis);
+	}
+
+	return listbits(bits);
+}
+
+
+export function solvePuzzle(board:number[]) {
+  return solveBoard(board).answer;
+}
+
+export function solveBoard(original:number[]) {
+  var board   = [].concat(original);
+	var guesses = deduce(board);
+
+	if (guesses === null) {
+		return {state:[], answer:board};
+	}
+
+	var track = [{guesses:guesses, count:0, board:board}];
+	return solveNext(track);
+}
+
 // board: array of numbers, size of array 81, contains solved sudoku puzzle
 function makePuzzle(board: number[]) {
   var puzzle: any[] = [];
@@ -65,7 +93,6 @@ function boardMatches(b1:any[], b2:any[]) {
 	return true;
 }
 
-
 function checkPuzzle(puzzle: any[], board: number[]) {
   if (board === undefined) {
 		board = null;
@@ -88,22 +115,6 @@ function checkPuzzle(puzzle: any[], board: number[]) {
 	}
 
 	return difficulty;
-}
-
-export function solvePuzzle(board:number[]) {
-  return solveBoard(board).answer;
-}
-
-export function solveBoard(original:number[]) {
-  var board   = [].concat(original);
-	var guesses = deduce(board);
-
-	if (guesses === null) {
-		return {state:[], answer:board};
-	}
-
-	var track = [{guesses:guesses, count:0, board:board}];
-	return solveNext(track);
 }
 
 function solveNext(remembered: any[]) {
@@ -309,18 +320,6 @@ function axisfor(pos:number, axis:number) {
 
 	return Math.floor(pos / 27) * 3 + Math.floor(pos / 3) % 3;
 }
-
-export function allowed(board:number[], pos:number):number[] {
-	var bits = 511;
-
-	for (var axis = 0; axis < 3; axis++) {
-		var x = axisfor(pos, axis);
-		bits = bits & axismissing(board, x, axis);
-	}
-
-	return listbits(bits);
-}
-
 
 function pickBetter(b: any[], c: number, t: any[]) {
   if (b === null || t.length < b.length) {
