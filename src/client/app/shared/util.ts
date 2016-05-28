@@ -43,4 +43,8 @@ function zip(arrays:any[]) {
     });
 }
 
-export {partition, identity, prop, keep, repeat, shuffle, zip};
+function deepCopy(originalObject:any):any {
+  return JSON.parse(JSON.stringify(originalObject));
+}
+
+export {partition, identity, prop, keep, repeat, shuffle, zip, deepCopy};

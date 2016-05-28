@@ -4,6 +4,8 @@ import {GameData} from './game-data';
 
 import {GridService} from './grid';
 
+import {deepCopy} from '../../shared/util';
+
 import {generateUID, withinGridMem, coordToPosMem, posToCoord,
   getBoardWidth, getBoardHeight, ROTATION_MATRIX, PATTERN_COOR, PATTERNS
 } from './game';
@@ -137,6 +139,13 @@ export class Piece {
     GridService.resetGhostPiece();
   }
 
+  get Coord(){
+    return {
+      x: this.x,
+      y: this.y
+    }
+  }
+
   get PositionX() {
       return this.x;
   }
@@ -254,7 +263,7 @@ export class Piece {
   }
 
   convertPatternToCoordinates(cell?: {x:number, y:number}) {
-      var coord = _.clone(this.getPatternCoord()),
+      var coord = deepCopy(this.getPatternCoord()),
           location = cell || {x: this.x, y: this.y};
       _.each(coord, function (ele, index) {
           coord[index].x += location.x;
