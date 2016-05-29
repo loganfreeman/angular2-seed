@@ -54,9 +54,10 @@ export function main() {
     it('should update position', () =>  {
       let newPos = { y: 11};
       let fn = jasmine.createSpy('updatePositionCallback');
-      spyOn(piece, 'verifyPiece');
       piece.updatePosition(newPos, fn);
-      expect(piece.verifyPiece).toHaveBeenCalledWith({ x: 4, y: 11 });
+      expect(fn).not.toHaveBeenCalled();
+      expect(piece.PositionX).toEqual(4);
+      expect(piece.PositionY).toEqual(11);
     })
   })
 }

@@ -46,7 +46,7 @@ export class Piece {
   }
 
   public static generatePatterns(pieces:any[]) {
-      var pattern:any[] = [];
+      var pattern:number[] = [];
       Piece.pattern2d = [];
       Piece.patternCoord2d = [];
       _.each(pieces, function (piece, index) {
