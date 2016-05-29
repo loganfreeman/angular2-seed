@@ -20,8 +20,8 @@ export function main() {
       expect(truth).toBe(true);
     })
     it('should get pattern coord', () => {
-      expect(piece.PositionX).toEqual(4);
-      expect(piece.PositionY).toEqual(10);
+      expect(piece.PositionX).toEqual(pos.x);
+      expect(piece.PositionY).toEqual(pos.y);
       expect(piece.patterns < GameData.patternLimit).toBe(true);
       expect(piece.rotation < GameData.rotationLimit).toBe(true);
       let coord = piece.getPatternCoord();
@@ -31,7 +31,7 @@ export function main() {
       }
     })
     it('should convert pattern to coordinate', () => {
-      let coord = piece.convertPatternToCoordinates({x: 4, y: 10});
+      let coord = piece.convertPatternToCoordinates({x: pos.x, y: pos.y});
       for(var i = 0, len = coord.length; i < len; i++) {
         expect(withinGridMem(coord[i])).toBe(true);
         expect(GridService.isPieceVerify(coord[i])).toBe(true);
@@ -52,23 +52,31 @@ export function main() {
       expect(truth).toBe(true);
     })
     it('should update position', () =>  {
-      let newPos = { y: 11};
+      let newPos = { y: pos.y + 1};
       let fn = jasmine.createSpy('updatePositionCallback');
       spyOn(piece, 'verifyPiece').and.callThrough();
       piece.updatePosition(newPos, fn);
-      expect(piece.verifyPiece).toHaveBeenCalledWith({x: 4, y: 11});
+      expect(piece.verifyPiece).toHaveBeenCalledWith({x: pos.x, y: newPos.y});
       expect(fn).not.toHaveBeenCalled();
-      expect(piece.PositionX).toEqual(4);
-      expect(piece.PositionY).toEqual(11);
+      expect(piece.PositionX).toEqual(pos.x);
+      expect(piece.PositionY).toEqual(newPos.y);
     })
-
+    it('should update position and call callback if collision happens', () => {
+      let cell = piece.calculateCollisionPoint();
+      let newPos = {x : cell.x, y: cell.y + 1};
+      let oldPos = piece.Coord;
+      expect(piece.verifyPiece(cell)).toEqual(true);
+      expect(piece.verifyPiece(newPos)).toEqual(false);
+      let fn = jasmine.createSpy('updatePositionCallback');
+      spyOn(piece, 'verifyPiece').and.callThrough();
+      piece.updatePosition(newPos, fn);
+      expect(fn).toHaveBeenCalled();
+      expect(piece.PositionX).toEqual(oldPos.x);
+      expect(piece.PositionY).toEqual(oldPos.y);
+    })
     it('should calculate collision point', () => {
-      expect(piece.PositionX).toEqual(4);
-      expect(piece.PositionY).toEqual(11);
       spyOn(piece, 'verifyPiece').and.callThrough();
       let cell = piece.calculateCollisionPoint();
-      expect(piece.PositionX).toEqual(4);
-      expect(piece.PositionY).toEqual(11);
       expect(piece.verifyPiece(cell)).toEqual(true);
       expect(piece.verifyPiece({x : cell.x, y: cell.y + 1})).toEqual(false);
     })
