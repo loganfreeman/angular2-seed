@@ -51,10 +51,6 @@ export function main() {
       let truth = piece.verifyPiece({x: piece.PositionX, y: piece.PositionY + 1});
       expect(truth).toBe(true);
     })
-    it('should not verify piece', () => {
-      let truth = piece.verifyPiece({x: 4, y: 18});
-      expect(truth).toBe(false);
-    })
     it('should update position', () =>  {
       let newPos = { y: 11};
       let fn = jasmine.createSpy('updatePositionCallback');
@@ -73,6 +69,8 @@ export function main() {
       let cell = piece.calculateCollisionPoint();
       expect(piece.PositionX).toEqual(4);
       expect(piece.PositionY).toEqual(11);
+      expect(piece.verifyPiece(cell)).toEqual(true);
+      expect(piece.verifyPiece({x : cell.x, y: cell.y + 1})).toEqual(false);
     })
 
     it('should rotate piece', () => {
