@@ -61,5 +61,12 @@ export function main() {
       expect(piece.PositionX).toEqual(4);
       expect(piece.PositionY).toEqual(11);
     })
+    it('should rotate piece', () => {
+      let oldRotation = piece.rotation;
+      spyOn(piece, 'verifyPiece').and.callThrough();
+      piece.rotatePiece();
+      expect(piece.verifyPiece).toHaveBeenCalledWith();
+      expect(piece.rotation).toEqual((oldRotation + 1) % GameData.rotationLimit)
+    })
   })
 }
