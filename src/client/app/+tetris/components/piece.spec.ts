@@ -2,7 +2,7 @@ import {Piece} from './piece';
 import {Coordinate} from './coord';
 import {GridService} from './grid';
 import {GameData} from './game-data';
-import {PATTERN_COOR, withinGridMem, coordToPosMem, posToCoord} from './game';
+import {PATTERN_COOR, withinGridMem, coordToPosMem, posToCoord, getBoardHeight} from './game';
 
 export function main() {
   describe('piece', () => {
@@ -51,6 +51,10 @@ export function main() {
       let truth = piece.verifyPiece({x: piece.PositionX, y: piece.PositionY + 1});
       expect(truth).toBe(true);
     })
+    it('should not verify piece', () => {
+      let truth = piece.verifyPiece({x: 4, y: 18});
+      expect(truth).toBe(false);
+    })
     it('should update position', () =>  {
       let newPos = { y: 11};
       let fn = jasmine.createSpy('updatePositionCallback');
@@ -61,6 +65,16 @@ export function main() {
       expect(piece.PositionX).toEqual(4);
       expect(piece.PositionY).toEqual(11);
     })
+
+    it('should calculate collision point', () => {
+      expect(piece.PositionX).toEqual(4);
+      expect(piece.PositionY).toEqual(11);
+      spyOn(piece, 'verifyPiece').and.callThrough();
+      let cell = piece.calculateCollisionPoint();
+      expect(piece.PositionX).toEqual(4);
+      expect(piece.PositionY).toEqual(11);
+    })
+
     it('should rotate piece', () => {
       let oldRotation = piece.rotation;
       spyOn(piece, 'verifyPiece').and.callThrough();

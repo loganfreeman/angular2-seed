@@ -263,12 +263,14 @@ export class Piece {
   }
 
   convertPatternToCoordinates(cell?: {x:number, y:number}) {
+      console.log(cell);
       var coord = deepCopy(this.getPatternCoord()),
           location = cell || {x: this.x, y: this.y};
       _.each(coord, function (ele, index) {
           coord[index].x += location.x;
           coord[index].y += location.y;
       });
+      console.log(coord);
       return coord;
   }
 }
