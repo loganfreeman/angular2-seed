@@ -239,6 +239,14 @@ export class Piece {
       GridService.resetGhostPiece();
   }
 
+  updateCurrentPiece() {
+    GridService.resetCurrentPiece();
+    let coord = this.convertPatternToCoordinates();
+    for(var i = 0, len = coord.length; i < len; i++) {
+        GridService.updateCurrentPiece(coord[i], this.getShape());
+    }
+  }
+
   updateGhostPiece() {
       var point = this.calculateCollisionPoint(),
           coord = this.convertPatternToCoordinates(point);

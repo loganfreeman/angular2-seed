@@ -13,11 +13,23 @@ export class GridService {
     GridService.grid[pos].ghost = true;
   }
 
+  public static updateCurrentPiece(cell:any, shape:any) {
+    var pos = coordToPosMem(cell);
+    GridService.grid[pos].current = true;
+    GridService.grid[pos].shape = shape;
+  }
+
 
   public static resetGhostPiece() {
       for(var i = 0, len = GridService.grid.length; i < len; i++) {
           GridService.grid[i].ghost = false;
       }
+  }
+
+  public static resetCurrentPiece() {
+    for(var i = 0, len = GridService.grid.length; i < len; i++) {
+        GridService.grid[i].current = false;
+    }
   }
 
   public static buildEmptyGameBoard() {

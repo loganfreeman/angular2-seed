@@ -65,6 +65,7 @@ export class TetrisComponent {
 
   gameLoop() {
     this.moveCurrentPiece();
+    this.updateCurrentPiece();
     this.updateGhostPiece();
   }
 
@@ -90,6 +91,12 @@ export class TetrisComponent {
     this.currentPiece.updatePosition({
         y: speedY
     }, () => this.insertAndClearRow());
+  }
+
+  updateCurrentPiece() {
+    if(this.currentPiece) {
+      this.currentPiece.updateCurrentPiece();
+    }
   }
 
   insertAndClearRow() {
@@ -179,7 +186,7 @@ export class TetrisComponent {
 
   getFilledClass(cell:any) {
       var pieceClass = '';
-      if (cell.filled) {
+      if (cell.filled || cell.current) {
           switch(cell.shape) {
               case 0: pieceClass = 'dy-L-filled';
                   break;

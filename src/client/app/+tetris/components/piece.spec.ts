@@ -15,6 +15,16 @@ export function main() {
       expect(coord.x).toEqual(piece.Coord.x);
       expect(coord.y).toEqual(piece.Coord.y);
     })
+    it('should update current piece', () => {
+      piece.updateCurrentPiece();
+      let shape = piece.getShape();
+      let coord = piece.convertPatternToCoordinates();
+      for(var i = 0, len = coord.length; i < len; i++) {
+        let pos = coordToPosMem(coord[i]);
+        expect(GridService.grid[pos].current).toEqual(true);
+        expect(GridService.grid[pos].shape).toEqual(shape);
+      }
+    })
     it('should test within grid', () => {
       let truth = withinGridMem(piece.Coord);
       expect(truth).toBe(true);
