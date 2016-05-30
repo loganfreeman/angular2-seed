@@ -100,6 +100,7 @@ export class TetrisComponent {
     GridService.insertPiece(this.currentPiece, () => this.gameOver());
     this.currentPiece.destroy();
     this.currentPiece = null;
+    this.createNewPiece();
   }
 
   updateGhostPiece() {
