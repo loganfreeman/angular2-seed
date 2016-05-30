@@ -4,6 +4,18 @@
  *
  * TODO: In a later version of this boilerplate, I'd like to automate this.
  */
+ .flexbox-container {
+	display: -ms-flex;
+	display: -webkit-flex;
+	display: flex;
+}
+.flexbox-container > div:first-child {
+	margin-right: 20px;
+}
+.flexbox-container > div {
+	width: 50%;
+	padding: 10px;
+}
 .dy-home {
   padding-top: 20px;
 }

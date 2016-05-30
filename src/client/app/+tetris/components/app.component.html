@@ -1,15 +1,43 @@
-<div class="dy-game-board">
-    <div class="dy-grid-container">
-        <div *ngFor="let cell of grid; let i=index" class="dy-grid-cell" [ngClass]="getFilledClass(cell)" [ngStyle]="getFilledCustomColor(cell)"></div>
-        <div class="dy-piece" [ngClass]="isPieceReady()">
-          <ul class="dy-piece-ul" [ngClass]="getClassForShape()">
-            <li *ngFor="let piece of pieces" class="dy-piece-li" [ngClass]="checkPattern(piece)" [ngStyle]="getColor()">
-            </li>
-          </ul>
+<div class='flexbox-container'>
+  <div>
+    <div class="dy-game-board">
+        <div class="dy-grid-container">
+            <div *ngFor="let cell of grid; let i=index" class="dy-grid-cell" [ngClass]="getFilledClass(cell)" [ngStyle]="getFilledCustomColor(cell)"></div>
+            <div class="dy-piece" [ngClass]="isPieceReady()">
+              <ul class="dy-piece-ul" [ngClass]="getClassForShape()">
+                <li *ngFor="let piece of pieces" class="dy-piece-li" [ngClass]="checkPattern(piece)" [ngStyle]="getColor()">
+                </li>
+              </ul>
+            </div>
         </div>
     </div>
-</div>
-<div class='btn-group'>
-  <button type="button" class="btn btn-secondary" (click)="startGame()" [disabled]="isStart">Start</button>
-  <button type="button" class="btn btn-secondary" (click)="toggleGamePause()">{{ isPause ? 'Resume' : 'Pause'}}</button>
+    <div class='btn-group'>
+      <button type="button" class="btn btn-secondary" (click)="startGame()" [disabled]="isStart">Start</button>
+      <button type="button" class="btn btn-secondary" (click)="toggleGamePause()">{{ isPause ? 'Resume' : 'Pause'}}</button>
+    </div>
+  </div>
+
+  <div>
+    <h1>Instructions</h1>
+    <ul class='list-group'>
+      <li class="list-group-item">
+        Arrow left: move left
+      </li>
+      <li class="list-group-item">
+        Arrow right: move right
+      </li>
+      <li class="list-group-item">
+        Arrow up: rotate right
+      </li>
+      <li class="list-group-item">
+        Arrow down: rotate left
+      </li>
+      <li class="list-group-item">
+        Space: hard drop
+      </li>
+      <li class="list-group-item">
+        escape: pause
+      </li>
+    </ul>
+  </div>
 </div>
