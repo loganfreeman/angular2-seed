@@ -43,15 +43,20 @@ export function main() {
         GridService.grid[curPos].filled = true;
         GridService.grid[curPos].shape = piece.getShape();
       }
-      let fn = jasmine.createSpy('checkAndClearFilledRowCallback');
+      let that = {
+        'checkAndClearFilledRowCallback': () => GameData.score += 100
+      };
+      let fn = spyOn(that, 'checkAndClearFilledRowCallback').and.callThrough();
       GridService.checkAndClearFilledRow(fn);
       expect(fn).toHaveBeenCalled();
+      expect(GameData.score).toEqual(100);
       for(var j = 0; j < getBoardWidth(); j++) {
         var curPos = coordToPosMem({x: j, y: level-1});
         expect(GridService.grid[curPos].filled).toEqual(false);
         expect(GridService.grid[curPos].shape).toEqual(null);
       }
       GridService.buildEmptyGameBoard();
+      GameData.score = 0;
     })
   })
 }
