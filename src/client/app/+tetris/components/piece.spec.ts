@@ -88,5 +88,14 @@ export function main() {
       expect(piece.verifyPiece).toHaveBeenCalledWith();
       expect(piece.rotation).toEqual((oldRotation + 1) % GameData.rotationLimit)
     })
+    it('should update ghost piece', () => {
+      piece.updateGhostPiece();
+      let cell = piece.calculateCollisionPoint();
+      let coord = piece.convertPatternToCoordinates(cell);
+      for(var i = 0, len = coord.length; i < len; i++) {
+          let pos = coordToPosMem(coord[i]);
+          expect(GridService.grid[pos].ghost).toEqual(true);
+      }
+    })
   })
 }

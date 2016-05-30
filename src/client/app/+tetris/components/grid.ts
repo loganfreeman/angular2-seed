@@ -10,9 +10,7 @@ export class GridService {
 
   public static updateGhostPiece(cell:any) {
     var pos = coordToPosMem(cell);
-    if (pos > 0) {
-        GridService.grid[pos].ghost = true;
-    }
+    GridService.grid[pos].ghost = true;
   }
 
 
