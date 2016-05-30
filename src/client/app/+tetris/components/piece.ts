@@ -147,6 +147,18 @@ export class Piece {
     }
   }
 
+  get Patterns() {
+    return this.patterns;
+  }
+
+  get Rotation() {
+    return this.rotation;
+  }
+
+  set Rotation(rotation) {
+    this.rotation = rotation;
+  }
+
   get PositionX() {
       return this.x;
   }
@@ -163,7 +175,7 @@ export class Piece {
       this.y = y;
   }
 
-  updatePosition(newPosition:{y?:number, x?:number}, cb: () => void) {
+  updatePosition(newPosition:{y?:number, x?:number}, cb?: () => void) {
       var isMoveDown = isNaN(newPosition.y) ? false : newPosition.y > this.y;
       var    x = isNaN(newPosition.x) ? this.x : newPosition.x,
       y = isNaN(newPosition.y) ? this.y : newPosition.y,
@@ -228,6 +240,10 @@ export class Piece {
           }
       }
       return isOk;
+  }
+
+  withinGrid(coord:Coordinate) {
+    return withinGridMem(coord);
   }
 
   destroy() {

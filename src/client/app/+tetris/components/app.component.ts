@@ -10,6 +10,8 @@ import {NgClass, NgStyle} from '@angular/common';
 
 import {Piece} from './piece';
 
+import{getBoardWidth} from './game';
+
 import 'underscore';
 
 
@@ -37,8 +39,6 @@ export class TetrisComponent {
     this.pieces =  _.range(16);
     this.gameOn();
   }
-
-
 
   gameOn() {
     window.requestAnimationFrame(() => this.gameOn()); // use arrow functions to lexically capture this
@@ -84,6 +84,85 @@ export class TetrisComponent {
 
   getCurrentPiece() {
     return this.currentPiece;
+  }
+
+  rotatePiece(direction:number) {
+    var oldRotation = this.currentPiece.Rotation,
+        newRotation = oldRotation + direction;
+    this.currentPiece.Rotation = newRotation < 0 ? newRotation + GameData.rotationLimit : newRotation % GameData.rotationLimit;
+    let coord = this.currentPiece.convertPatternToCoordinates();
+    for(var i = 0, len = coord.length; i < len; i++) {
+        if (!this.currentPiece.withinGrid(coord[i])) {
+            if (coord[i].x < 0) {
+                this.movePieceInLevel('right');
+                break;
+            }
+            if (coord[i].x >= getBoardWidth() ) {
+                this.movePieceInLevel('left');
+                if (this.currentPiece.patterns === 2) {
+                    if (coord[i+1] && coord[i+1].x >= getBoardWidth()) {
+                        this.moveCustomInLevel(-2);
+                    }
+                    break;
+                } else {
+                    break;
+                }
+            }
+            if(!this.currentPiece.verifyPiece()) {
+                this.currentPiece.Rotation = oldRotation;
+                break;
+            }
+        }
+    }
+  }
+
+  moveCustomInLevel(velocity:number) {
+    var speedX = this.currentPiece.PositionX + velocity;
+    this.currentPiece.updatePosition({
+        x: speedX
+    });
+  }
+
+  movePieceInLevel(direction:string) {
+    let velocity = (direction === 'left') ? -1 : 1;
+    let  speedX = this.currentPiece.PositionX + velocity;
+    this.currentPiece.updatePosition({
+        x: speedX
+    });
+  }
+
+  hardDrop() {
+      var cell = this.currentPiece.calculateCollisionPoint();
+      this.currentPiece.updatePosition(cell, () => this.insertAndClearRow());
+  }
+
+  move(key:string) {
+    var rotateRight = 1,
+        rotateLeft = -1;
+    switch (key) {
+        case 'up':
+            this.rotatePiece(rotateRight);
+            break;
+        case 'left':
+            this.movePieceInLevel('left');
+            break;
+        case 'right':
+            this.movePieceInLevel('right');
+            break;
+        case 'down':
+            this.rotatePiece(rotateLeft);
+            break;
+        case 'space':
+            this.hardDrop();
+            break;
+        case 'p':
+        case 'esc':
+            this.toggleGamePause();
+            break;
+        default:
+            break;
+    }
+    this.updateGhostPiece();
   }
 
   moveCurrentPiece() {
