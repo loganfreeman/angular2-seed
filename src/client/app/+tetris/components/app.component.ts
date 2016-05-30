@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, HostListener } from '@angular/core';
 
 import { MODAL_DIRECTIVES, ModalResult, ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
@@ -38,6 +38,11 @@ export class TetrisComponent {
     this.grid = GridService.grid;
     this.pieces =  _.range(16);
     this.gameOn();
+  }
+
+  @HostListener('document: keydown', ['$event'])
+  onKeyDown(event:KeyboardEvent) {
+    this.move(event.keyCode);
   }
 
   gameOn() {
@@ -136,27 +141,26 @@ export class TetrisComponent {
       this.currentPiece.updatePosition(cell, () => this.insertAndClearRow());
   }
 
-  move(key:string) {
+  move(key:number) {
     var rotateRight = 1,
         rotateLeft = -1;
     switch (key) {
-        case 'up':
+        case 38:
             this.rotatePiece(rotateRight);
             break;
-        case 'left':
+        case 37:
             this.movePieceInLevel('left');
             break;
-        case 'right':
+        case 39:
             this.movePieceInLevel('right');
             break;
-        case 'down':
+        case 40:
             this.rotatePiece(rotateLeft);
             break;
-        case 'space':
+        case 32:
             this.hardDrop();
             break;
-        case 'p':
-        case 'esc':
+        case 27:
             this.toggleGamePause();
             break;
         default:
