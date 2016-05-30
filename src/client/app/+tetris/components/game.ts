@@ -129,3 +129,11 @@ export function buildEmptyGameBoard() {
       };
   }
 }
+
+export var getX = _.memoize(function(x:number) {
+  return x * board.pieceWidthInPixel + board.borderWidth;
+})
+
+export var getY = _.memoize(function (y:number) {
+    return y * board.pieceWidthInPixel;
+})

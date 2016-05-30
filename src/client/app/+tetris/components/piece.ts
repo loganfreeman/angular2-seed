@@ -7,7 +7,8 @@ import {GridService} from './grid';
 import {deepCopy} from '../../shared/util';
 
 import {generateUID, withinGridMem, coordToPosMem, posToCoord,
-  getBoardWidth, getBoardHeight, ROTATION_MATRIX, PATTERN_COOR, PATTERNS
+  getBoardWidth, getBoardHeight, ROTATION_MATRIX, PATTERN_COOR, PATTERNS,
+  getX, getY
 } from './game';
 
 import 'underscore';
@@ -270,5 +271,13 @@ export class Piece {
           coord[index].y += location.y;
       });
       return coord;
+  }
+
+  getLeft() {
+      return getX(this.PositionX);
+  }
+
+  getTop() {
+      return getY(this.PositionY);
   }
 }

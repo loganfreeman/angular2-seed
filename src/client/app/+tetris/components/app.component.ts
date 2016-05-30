@@ -81,6 +81,9 @@ export class TetrisComponent {
       return this.currentPiece.PositionY;
   }
 
+  getCurrentPiece() {
+    return this.currentPiece;
+  }
 
   moveCurrentPiece() {
     var speedY = this.getPositionY() + 1;
@@ -127,6 +130,11 @@ export class TetrisComponent {
         x: 4,
         y: 0
     });
+    let collisionPoint = this.currentPiece.calculateCollisionPoint();
+    if(collisionPoint.y <= this.currentPiece.PositionY) {
+      this.gameOver();
+      this.currentPiece = null;
+    }
   }
 
 
@@ -135,7 +143,30 @@ export class TetrisComponent {
   }
 
   getClassForShape() {
-    return '';
+    if (!this.isGameStart() ||
+        !this.getCurrentPiece()) {
+        return '';
+    }
+    var pieceClass = '';
+    switch(this.getCurrentPiece().getShape()) {
+        case 0: pieceClass = 'dy-L';
+            break;
+        case 1: pieceClass = 'dy-O';
+            break;
+        case 2: pieceClass = 'dy-I';
+            break;
+        case 3: pieceClass = 'dy-T';
+            break;
+        case 4: pieceClass = 'dy-J';
+            break;
+        case 5: pieceClass = 'dy-S';
+            break;
+        case 6: pieceClass = 'dy-Z';
+            break;
+        default: pieceClass = 'dy-X';
+            break;
+    }
+    return pieceClass;
   }
 
   checkPattern(piece:any) {
