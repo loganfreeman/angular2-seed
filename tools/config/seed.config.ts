@@ -61,6 +61,7 @@ export class SeedConfig {
 
   // Declare local files that needs to be injected
   APP_ASSETS: InjectableDependency[] = [
+    { src: `${this.CSS_SRC}/font-awesome.min.css`, inject: true, vendor: true },
     { src: `${this.CSS_SRC}/main.css`, inject: true, vendor: false }
   ];
 
