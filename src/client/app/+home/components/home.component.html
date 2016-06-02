@@ -2,9 +2,9 @@
   <div id="sidebar-wrapper">
       <ul class="sidebar-nav">
           <li class="sidebar-brand">
-            <button class="category" data-category="sorting"><i class="fa fa-fw fa-caret-down"></i>Sorting</button>
-            <button class="indent" data-algorithm="insertion" data-category="sorting">Insertion Sort</button>
-            <button class="indent" data-algorithm="selection" data-category="sorting">Selection Sort</button>
+            <button class="category" data-category="sorting" (click)="onCategoryBtnClick($event)"><i class="fa fa-fw fa-caret-down"></i>Sorting</button>
+            <button class="indent" data-algorithm="insertion" data-category="sorting" [ngClass]="{collapse: isCategoryCollasped}">Insertion Sort</button>
+            <button class="indent" data-algorithm="selection" data-category="sorting" [ngClass]="{collapse: isCategoryCollasped}">Selection Sort</button>
           </li>
           <li>
               <a href="#">Dashboard</a>

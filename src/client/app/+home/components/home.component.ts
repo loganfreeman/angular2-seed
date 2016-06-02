@@ -1,5 +1,5 @@
 import { FORM_DIRECTIVES } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 import { NameListService } from '../../shared/index';
 
@@ -10,4 +10,8 @@ import { NameListService } from '../../shared/index';
   directives: [FORM_DIRECTIVES]
 })
 export class HomeComponent {
+  isCategoryCollasped: boolean = true;
+  onCategoryBtnClick($event: MouseEvent) {
+    this.isCategoryCollasped = !this.isCategoryCollasped
+  }
 }

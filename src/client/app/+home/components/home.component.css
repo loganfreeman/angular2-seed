@@ -67,24 +67,20 @@
     background: none;
 }
 
-button {
-    color: #999999;
-}
-
 .sidebar-nav button {
     display: block;
     width: 100%;
     text-align: left;
 }
 
-button.category {
+.sidebar-nav button.category {
     background: rgba(0, 0, 0, .10);
 }
 
-button.indent {
+.sidebar-nav button.indent {
     padding-left: 28px;
 }
 
-button.collapse {
+.sidebar-nav button.collapse {
     display: none;
 }
