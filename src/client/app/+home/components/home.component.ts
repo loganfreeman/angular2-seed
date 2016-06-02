@@ -20,11 +20,48 @@ export class HomeComponent {
     }, {
       label: 'selection',
       text: 'Selection Sort'
+    }, {
+      label: 'bubble',
+      text: 'Bubble Sort'
+    }, {
+      label: 'merge',
+      text: 'Merge Sort'
+    }, {
+      label: 'quick',
+      text: 'Quick Sort'
+    }, {
+      label: 'heap',
+      text: 'Heap Sort'
+    }],
+    search: [{
+      label: 'binary search',
+      text: 'Binary Search'
+    }],
+    string: [{
+      label: 'edit distance',
+      text: 'Edit Distance'
+    }, {
+      label: 'suffix array',
+      text: 'Suffix Array'
+    }],
+    greey: [{
+      label: 'job scheduling',
+      text: 'Job Scheduling'
+    }],
+    graph: [{
+      label: 'bfs',
+      text: 'Breadth First Search'
+    }, {
+      label: 'dfs',
+      text: 'Depth First Search'
     }]
   }
   categories: string[] = Object.keys(this.categoryMap)
-  categoryStateMap: { [category: string]: boolean} = {
-    sorting: true
+  categoryStateMap: { [category: string]: boolean} = {}
+  constructor() {
+    for(let category of this.categories) {
+      this.categoryStateMap[category] = true
+    }
   }
   onCategoryBtnClick(category: string) {
     if (this.categoryStateMap[category]) {
