@@ -10,8 +10,32 @@ import { NameListService } from '../../shared/index';
   directives: [FORM_DIRECTIVES]
 })
 export class HomeComponent {
-  isCategoryCollasped: boolean = true;
-  onCategoryBtnClick($event: MouseEvent) {
-    this.isCategoryCollasped = !this.isCategoryCollasped
+  categoryMap: { [category: string]: any[]} = {
+    sorting: [{
+      label: 'insertion',
+      text: 'Insertion Sort'
+    }, {
+      label: 'selection',
+      text: 'Selection Sort'
+    }]
+  }
+  categories: string[] = Object.keys(this.categoryMap)
+  categoryStateMap: { [category: string]: boolean} = {
+    sorting: true
+  }
+  capitalFirstLetter(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+  onCategoryBtnClick(category: string) {
+    if (this.categoryStateMap[category]) {
+      this.categoryStateMap[category] = false
+    } else {
+      this.categoryStateMap[category] = true
+    }
+  }
+  getCategoryState(category: string) {
+    return {
+      collapse: this.categoryStateMap[category]
+    }
   }
 }

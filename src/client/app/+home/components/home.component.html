@@ -1,31 +1,9 @@
 <div id="wrapper">
   <div id="sidebar-wrapper">
       <ul class="sidebar-nav">
-          <li class="sidebar-brand">
-            <button class="category" [attr.category]="'sorting'" (click)="onCategoryBtnClick($event)"><i class="fa fa-fw fa-caret-down"></i>Sorting</button>
-            <button class="indent" [attr.algorithm]="'insertion'" [attr.category]="'sorting'" [ngClass]="{collapse: isCategoryCollasped}">Insertion Sort</button>
-            <button class="indent" [attr.algorithm]="'selection'" [attr.category]="'sorting'" [ngClass]="{collapse: isCategoryCollasped}">Selection Sort</button>
-          </li>
-          <li>
-              <a href="#">Dashboard</a>
-          </li>
-          <li>
-              <a href="#">Shortcuts</a>
-          </li>
-          <li>
-              <a href="#">Overview</a>
-          </li>
-          <li>
-              <a href="#">Events</a>
-          </li>
-          <li>
-              <a href="#">About</a>
-          </li>
-          <li>
-              <a href="#">Services</a>
-          </li>
-          <li>
-              <a href="#">Contact</a>
+          <li class="sidebar-brand" *ngFor="let category of categories">
+            <button class="category" [attr.category]="category" (click)="onCategoryBtnClick(category)"><i class="fa fa-fw fa-caret-down"></i>{{category}}</button>
+            <button class="indent" *ngFor="let algorithm of categoryMap[category]" [attr.algorithm]="algorithm.label" [attr.category]="category" [ngClass]="getCategoryState(category)">{{algorithm.text}}</button>
           </li>
       </ul>
   </div>
