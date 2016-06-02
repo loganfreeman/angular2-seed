@@ -3,11 +3,14 @@ import { Component, HostListener } from '@angular/core';
 
 import { NameListService } from '../../shared/index';
 
+import {CapitalFirstPipe} from '../../shared/pipes/capital-first';
+
 @Component({
   selector: 'sd-home',
   templateUrl: 'app/+home/components/home.component.html',
   styleUrls: ['app/+home/components/home.component.css'],
-  directives: [FORM_DIRECTIVES]
+  directives: [FORM_DIRECTIVES],
+  pipes: [CapitalFirstPipe]
 })
 export class HomeComponent {
   categoryMap: { [category: string]: any[]} = {
@@ -22,9 +25,6 @@ export class HomeComponent {
   categories: string[] = Object.keys(this.categoryMap)
   categoryStateMap: { [category: string]: boolean} = {
     sorting: true
-  }
-  capitalFirstLetter(string: string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
   }
   onCategoryBtnClick(category: string) {
     if (this.categoryStateMap[category]) {
