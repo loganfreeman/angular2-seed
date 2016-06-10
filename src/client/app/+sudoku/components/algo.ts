@@ -321,18 +321,6 @@ function axisfor(pos:number, axis:number) {
 	return Math.floor(pos / 27) * 3 + Math.floor(pos / 3) % 3;
 }
 
-function pickBetter(b: any[], c: number, t: any[]) {
-  if (b === null || t.length < b.length) {
-    return { guess: t, count: 1 };
-  }else if (t.length > b.length) {
-    return { guess: b, count: c };
-  }else if (randomInt(c) === 0) {
-    return { guess: t, count: c + 1 };
-  }
-
-  return { guess: b, count: c + 1 };
-}
-
 function boardMatched(b1: number[], b2: number[]): boolean {
   for (var i = 0; i < 81; i++) {
     if (b1[i] !== b2[i]) {
