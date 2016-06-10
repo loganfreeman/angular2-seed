@@ -11,7 +11,7 @@ import {makeSudoku, solveBoard, allowed, solvePuzzle} from './algo';
  * @returns {Number} Random number within the range (Inclusive)
  */
 function getRandomInt(min: number, max : number) {
-  return Math.floor( Math.random() * ( max + 1 ) ) + min;
+  return Math.floor( Math.random() * ( max + 1 - min ) ) + min;
 }
 
 function makeTiles(board:number[]) {
