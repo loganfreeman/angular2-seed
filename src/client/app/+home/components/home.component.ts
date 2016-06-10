@@ -75,4 +75,9 @@ export class HomeComponent {
       collapse: this.categoryStateMap[category]
     }
   }
+  getCaretClass(category: string) {
+    return {
+      'fa-rotate-270': this.categoryStateMap[category]
+    }
+  }
 }

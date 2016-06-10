@@ -2,7 +2,7 @@
   <div id="sidebar-wrapper">
       <ul class="sidebar-nav">
           <li class="sidebar-brand" *ngFor="let category of categories">
-            <button class="category" [attr.category]="category" (click)="onCategoryBtnClick(category)"><i class="fa fa-fw fa-caret-down"></i>{{category | capitalFirstLetter}}</button>
+            <button class="category" [attr.category]="category" (click)="onCategoryBtnClick(category)"><i class="fa fa-fw fa-caret-down" [ngClass]="getCaretClass(category)"></i>{{category | capitalFirstLetter}}</button>
             <button class="indent" *ngFor="let algorithm of categoryMap[category]" [attr.algorithm]="algorithm.label" [attr.category]="category" [ngClass]="getCategoryState(category)">{{algorithm.text}}</button>
           </li>
       </ul>
