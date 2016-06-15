@@ -3,7 +3,9 @@
       <ul class="sidebar-nav">
           <li class="sidebar-brand" *ngFor="let category of categories">
             <button class="category" [attr.category]="category" (click)="onCategoryBtnClick(category)"><i class="fa fa-fw fa-caret-down" [ngClass]="getCaretClass(category)"></i>{{category | capitalFirstLetter}}</button>
-            <button class="indent" *ngFor="let algorithm of categoryMap[category]" [attr.algorithm]="algorithm.label" [attr.category]="category" [ngClass]="getCategoryState(category)">{{algorithm.text}}</button>
+            <button class="indent" *ngFor="let algorithm of categoryMap[category]" [attr.algorithm]="algorithm.label" [attr.category]="category" [ngClass]="getCategoryState(category)">
+              <a (click)="menuItemClick(algorithm.label)">{{algorithm.text}}</a>
+            </button>
           </li>
       </ul>
   </div>
@@ -12,9 +14,7 @@
   <div id="page-content-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1>Simple Sidebar</h1>
-            <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-            <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
+          <sd-about *ngIf="selectedMenuItem === 'animation'"></sd-about>
         </div>
     </div>
   </div>

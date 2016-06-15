@@ -5,11 +5,15 @@ import { NameListService } from '../../shared/index';
 
 import {CapitalFirstPipe} from '../../shared/pipes/capital-first';
 
+import { AboutComponent } from '../../+about/index';
+
+
+
 @Component({
   selector: 'sd-home',
   templateUrl: 'app/+home/components/home.component.html',
   styleUrls: ['app/+home/components/home.component.css'],
-  directives: [FORM_DIRECTIVES],
+  directives: [FORM_DIRECTIVES, AboutComponent],
   pipes: [CapitalFirstPipe]
 })
 export class HomeComponent {
@@ -34,18 +38,18 @@ export class HomeComponent {
       text: 'Heap Sort'
     }],
     search: [{
-      label: 'binary search',
+      label: 'binary_search',
       text: 'Binary Search'
     }],
     string: [{
-      label: 'edit distance',
+      label: 'edit_distance',
       text: 'Edit Distance'
     }, {
-      label: 'suffix array',
+      label: 'suffix_array',
       text: 'Suffix Array'
     }],
     greey: [{
-      label: 'job scheduling',
+      label: 'job_scheduling',
       text: 'Job Scheduling'
     }],
     graph: [{
@@ -54,14 +58,24 @@ export class HomeComponent {
     }, {
       label: 'dfs',
       text: 'Depth First Search'
-    }]
+    }],
+    svg: [
+      {
+        label: 'animation',
+        text: 'Animation'
+      }
+    ]
   }
   categories: string[] = Object.keys(this.categoryMap)
   categoryStateMap: { [category: string]: boolean} = {}
+  selectedMenuItem: string
   constructor() {
     for(let category of this.categories) {
       this.categoryStateMap[category] = true
     }
+  }
+  menuItemClick(menuItem: string) {
+    this.selectedMenuItem = menuItem;
   }
   onCategoryBtnClick(category: string) {
     if (this.categoryStateMap[category]) {
