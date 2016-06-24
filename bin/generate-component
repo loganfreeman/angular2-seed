@@ -1,11 +1,20 @@
 #!/usr/bin/env node
 "use strict";
 
-var handlebars = require('handlebars'),
-  fs = require('fs');
+let handlebars = require('handlebars'),
+  fs = require('fs'),
+  mkdirp = require('mkdirp'),
+  path = require('path'),
+  async = require('async');
 
-var name = process.argv[2];
-
+let name = process.argv[2];
+let selector;
+if (process.argv.length > 3) {
+  selector = process.argv[3]
+} else {
+  selector = 'sd-' + name;
+}
+let camelCaseName = componentName(name);
 function camelize(str) {
   return str
          .replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
@@ -21,4 +30,89 @@ function componentName(str) {
   return capitalizeFirstLetter(camelize(str)) + 'Component';
 }
 
-console.log(componentName(name));
+function ensureTrailingSlash(url) {
+  if (url.substr(-1) != '/') {
+    url += '/';
+  }
+  return url;
+}
+
+function ensureBeginningPlus(name) {
+  if(name.charAt(0) !== '+') {
+    name = '+' + name;
+  }
+  return name;
+}
+
+
+let dest = './src/client/app/';
+let index = './template/index.ts';
+let component = './template/component.ts';
+
+let data = {
+  name: name,
+  camelCaseName: camelCaseName,
+  selector: selector
+}
+
+dest = ensureTrailingSlash(dest);
+let componentDirectory = path.resolve(dest + ensureBeginningPlus(name));
+let componentComponentsDirectory = path.resolve(ensureTrailingSlash(componentDirectory) + 'components');
+
+function compile(file, data, callback){
+  fs.readFile(file, 'utf-8', (err, source) => {
+    let template = handlebars.compile(source);
+    let content = template(data);
+    callback(content);
+  })
+}
+
+
+async.waterfall([
+  callback => {
+    mkdirp(componentDirectory, (err) => {
+      callback(err)
+    })
+  },
+  callback => {
+    mkdirp(componentComponentsDirectory, (err) => {
+      callback(err)
+    })
+  },
+  callback => {
+    compile(index, data, (content) => {
+      let path = ensureTrailingSlash(componentDirectory) + 'index.ts';
+      fs.writeFile(path, content, (err) => {
+        callback(err)
+      })
+    })
+  },
+  callback => {
+    let dest = ensureTrailingSlash(componentComponentsDirectory);
+    async.parallel([
+      callback => {
+        fs.writeFile(dest + name + '.component.css', '/** genereated by logan freeman **/', (err) => {
+          callback(err)
+        })
+      },
+      callback => {
+        fs.writeFile(dest + name + '.component.html', '<h1>' + camelCaseName + '</h1>', (err) => {
+          callback(err)
+        })
+      },
+      callback => {
+        compile(component, data, (content) => {
+          fs.writeFile(dest + name + '.component.ts', content, (err) => {
+            callback(err)
+          })
+        })
+      }
+    ], (err) => {
+      callback(err)
+    })
+  }
+], (err, result) => {
+  if (err) {
+    console.log(err);
+  }
+})

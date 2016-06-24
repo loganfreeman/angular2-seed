@@ -9,11 +9,15 @@ import { AboutComponent } from '../../+about/index';
 
 import { ShowndownComponent } from '../../+showdown/index';
 
+import { TestComponent } from '../../+test/index';
+
+import { MarkdownComponent } from '../../+markdown/index';
+
 @Component({
   selector: 'sd-home',
   templateUrl: 'app/+home/components/home.component.html',
   styleUrls: ['app/+home/components/home.component.css'],
-  directives: [FORM_DIRECTIVES, AboutComponent, ShowndownComponent],
+  directives: [FORM_DIRECTIVES, AboutComponent, MarkdownComponent],
   pipes: [CapitalFirstPipe]
 })
 export class HomeComponent {
