@@ -7,13 +7,13 @@ import {CapitalFirstPipe} from '../../shared/pipes/capital-first';
 
 import { AboutComponent } from '../../+about/index';
 
-
+import { ShowndownComponent } from '../../+showdown/index';
 
 @Component({
   selector: 'sd-home',
   templateUrl: 'app/+home/components/home.component.html',
   styleUrls: ['app/+home/components/home.component.css'],
-  directives: [FORM_DIRECTIVES, AboutComponent],
+  directives: [FORM_DIRECTIVES, AboutComponent, ShowndownComponent],
   pipes: [CapitalFirstPipe]
 })
 export class HomeComponent {
@@ -59,10 +59,13 @@ export class HomeComponent {
       label: 'dfs',
       text: 'Depth First Search'
     }],
-    svg: [
+    visualization: [
       {
         label: 'animation',
         text: 'Animation'
+      }, {
+        label: 'markdown',
+        text: 'Markdown'
       }
     ]
   }
