@@ -23,6 +23,6 @@ export class MarkdownComponent implements AfterViewInit {
   }
 
   onTextAreaChange(text: string) {
-    console.log(text);
+    jQuery('.result').html(this.md.render(text));
   }
 }

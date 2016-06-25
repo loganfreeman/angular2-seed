@@ -147,9 +147,6 @@ export class SeedConfig {
       },
       'rxjs': {
         defaultExtension: 'js'
-      },
-      'markdown-it': {
-        main: 'dist/markdown-it.js'
       }
     }
   };
