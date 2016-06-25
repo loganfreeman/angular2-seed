@@ -13,7 +13,7 @@ export = () => {
   return es.merge([
     gulp.src(paths)
       .pipe(gulp.dest(APP_DEST)),
-    gulp.src(['lib/sigmajs-v1.0.0/sigma.min.js'])
+    gulp.src(['lib/sigmajs-v1.0.0/sigma.min.js', 'node_modules/markdown/lib/markdown.js'])
       .pipe(gulp.dest(APP_DEST))
   ]);
 };
