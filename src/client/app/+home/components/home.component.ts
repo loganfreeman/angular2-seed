@@ -7,7 +7,7 @@ import {CapitalFirstPipe} from '../../shared/pipes/capital-first';
 
 import { AboutComponent } from '../../+about/index';
 
-import { ShowndownComponent } from '../../+showdown/index';
+import { SigmajsComponent } from '../../+sigmajs/index';
 
 import { TestComponent } from '../../+test/index';
 
@@ -17,7 +17,7 @@ import { MarkdownComponent } from '../../+markdown/index';
   selector: 'sd-home',
   templateUrl: 'app/+home/components/home.component.html',
   styleUrls: ['app/+home/components/home.component.css'],
-  directives: [FORM_DIRECTIVES, AboutComponent, MarkdownComponent],
+  directives: [FORM_DIRECTIVES, AboutComponent, MarkdownComponent, SigmajsComponent],
   pipes: [CapitalFirstPipe]
 })
 export class HomeComponent {
@@ -70,6 +70,9 @@ export class HomeComponent {
       }, {
         label: 'markdown',
         text: 'Markdown'
+      }, {
+        label: 'sigmajs',
+        text: 'SigmaJS'
       }
     ]
   }
