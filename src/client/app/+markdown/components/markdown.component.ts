@@ -12,4 +12,8 @@ export class MarkdownComponent implements AfterViewInit {
       size: 4
     });
   }
+
+  onSelect(value: string) {
+    console.log(value);
+  }
 }

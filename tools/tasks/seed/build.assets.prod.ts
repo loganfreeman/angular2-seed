@@ -16,13 +16,17 @@ var onlyDirs = function (es: any) {
 };
 
 export = () => {
-  return gulp.src([
-    join(APP_SRC, '**'),
-    '!' + join(APP_SRC, '**', '*.ts'),
-    '!' + join(APP_SRC, '**', '*.css'),
-    '!' + join(APP_SRC, '**', '*.html'),
-    '!' + join(ASSETS_SRC, '**', '*.js')
-  ].concat(TEMP_FILES.map((p) => { return '!' + p; })))
-    .pipe(onlyDirs(es))
-    .pipe(gulp.dest(APP_DEST));
+  return es.merge([
+    gulp.src(['lib/sigmajs-v1.0.0/sigma.min.js'])
+      .pipe(gulp.dest(APP_DEST)),
+    gulp.src([
+      join(APP_SRC, '**'),
+      '!' + join(APP_SRC, '**', '*.ts'),
+      '!' + join(APP_SRC, '**', '*.css'),
+      '!' + join(APP_SRC, '**', '*.html'),
+      '!' + join(ASSETS_SRC, '**', '*.js')
+    ].concat(TEMP_FILES.map((p) => { return '!' + p; })))
+      .pipe(onlyDirs(es))
+      .pipe(gulp.dest(APP_DEST))
+  ]);
 };

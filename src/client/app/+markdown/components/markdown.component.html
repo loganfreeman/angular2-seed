@@ -1,5 +1,5 @@
 <h1>MarkdownComponent</h1>
-<select class="selectpicker">
+<select class="selectpicker" (change)="onSelect($event.target.value)">
   <option>Mustard</option>
   <option>Ketchup</option>
   <option>Relish</option>
