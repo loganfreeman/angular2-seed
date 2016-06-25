@@ -1,4 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
+import * as MarkdownIt from 'markdown-it';
 declare var jQuery:any;
 @Component({
   selector: 'sd-markdown',
@@ -6,6 +7,10 @@ declare var jQuery:any;
   styleUrls: ['app/+markdown/components/markdown.component.css'],
 })
 export class MarkdownComponent implements AfterViewInit {
+  md: any;
+  constructor() {
+    this.md = new MarkdownIt();
+  }
   ngAfterViewInit() {
     jQuery('.selectpicker').selectpicker({
       style: 'btn-info',
@@ -15,5 +20,9 @@ export class MarkdownComponent implements AfterViewInit {
 
   onSelect(value: string) {
     console.log(value);
+  }
+
+  onTextAreaChange(text: string) {
+    console.log(text);
   }
 }

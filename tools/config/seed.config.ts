@@ -94,6 +94,9 @@ export class SeedConfig {
     },
     packages: {
       rxjs: { defaultExtension: false }
+    },
+    map: {
+      'markdown-it': `${this.APP_BASE}node_modules/markdown-it/dist/markdown-it.js`
     }
   };
 
@@ -144,6 +147,9 @@ export class SeedConfig {
       },
       'rxjs': {
         defaultExtension: 'js'
+      },
+      'markdown-it': {
+        main: 'dist/markdown-it.js'
       }
     }
   };

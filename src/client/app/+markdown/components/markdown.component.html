@@ -1,6 +1,9 @@
 <h1>MarkdownComponent</h1>
-<select class="selectpicker" (change)="onSelect($event.target.value)">
-  <option>Mustard</option>
-  <option>Ketchup</option>
-  <option>Relish</option>
-</select>
+<div>
+  <select class="selectpicker" (change)="onSelect($event.target.value)">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </select>
+</div>
+<textarea class="markdown-orig" (change)="onTextAreaChange($event.target.value)"></textarea>
